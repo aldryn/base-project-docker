@@ -1,0 +1,10 @@
+--extra-index-url http://pkg:S5Zs5h5Z@pkg.djeese.com/simple/
+-r generated_requirements.txt 
+Django==1.4
+requests==0.8.1
+django-simple-sso==0.6.0
+PIL==1.1.7
+django-cms==2.3
+gunicorn==0.13.4
+djeesefs==0.1.5
+django-mptt==0.5.1
