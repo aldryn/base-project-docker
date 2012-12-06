@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import json
 
 gettext = lambda s: s
 
@@ -14,10 +15,17 @@ MANAGERS = ADMINS = ()
 LANGUAGES = [('en', 'en')]
 DEFAULT_LANGUAGE = 0
 
+vcap_services = json.loads(os.environ['VCAP_SERVICES'])
+mysql_srv = vcap_services['mysql-5.1'][0]
+cred = mysql_srv['credentials']
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_DIR, 'mycms.db'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': cred['name'],
+        'USER': cred['user'],
+        'PASSWORD': cred['password'],
+        'HOST': cred['hostname'],
+        'PORT': cred['port'],
     }
 }
 
