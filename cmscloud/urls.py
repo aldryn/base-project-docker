@@ -2,6 +2,6 @@
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns('',
-    url(r'^check-plugins/$', 'djeese_api.views.check_plugins'),
-    url(r'^check-apphooks/$', 'djeese_api.views.check_apphooks'),
+    url(r'^check-plugins/$', 'cmscloud.views.check_plugins'),
+    url(r'^check-apphooks/$', 'cmscloud.views.check_apphooks'),
 )

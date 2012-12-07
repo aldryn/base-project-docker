@@ -57,7 +57,6 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = [
-    'cmscloud.middleware.ConsoleExceptionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -113,6 +112,7 @@ INSTALLED_APPS = [
     'cms.plugins.file',
     'cms.plugins.snippet',
     'cms.plugins.googlemap',
+    'raven.contrib.django',
     'sekizai',
     'gunicorn',
     'cmscloud',
