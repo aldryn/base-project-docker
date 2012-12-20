@@ -24,6 +24,7 @@ class Command(NoArgsCommand):
         syncdb_opts['migrate_all'] = False
         syncdb_opts['interactive'] = False
         syncdb_opts['migrate'] = False
+        syncdb_opts['database'] = 'default'
         migrate_opts = deepcopy(options)
         migrate_opts['fake'] = False
         migrate_opts['interactive'] = False
@@ -45,9 +46,13 @@ class Command(NoArgsCommand):
         migrate.handle(**migrate_opts)
         datayaml = os.path.join(settings.PROJECT_DIR, 'data.yaml')
         if os.path.exists(datayaml):
+            self.stdout.write("Found data.yaml, trying to load.\n")
             activate(settings.CMS_LANGUAGES[0][0])
             os.chdir(settings.PROJECT_DIR)
             loader = Loader()
             loader.load(datayaml)
+        else:
+            self.stdout.write("data.yaml not found, not loading any data.\n")
         if key:
             requests.post('https://control.djeese.com/api/internal/v1/heroku-sync-command/', data={'key': key})
+

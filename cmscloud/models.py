@@ -2,18 +2,18 @@
 from cms.models.titlemodels import Title
 from django.conf import settings
 from django.db.models.signals import post_save, pre_save, post_delete
-from simple_sso.signatures import build_signature
 import requests
 
 
 def trigger_restart():
-    restarter = getattr(settings, 'RESTARTER_URL', None)
-    if not restarter:
-        return
-    params = [('command', 'restart'), ('key', settings.SIMPLE_SSO_KEY)]
-    signature = build_signature(params, settings.SIMPLE_SSO_SECRET)
-    params.append(('signature', signature))
-    requests.post(restarter, dict(params))
+    return
+    #restarter = getattr(settings, 'RESTARTER_URL', None)
+    #if not restarter:
+    #    return
+    #params = [('command', 'restart'), ('key', settings.SIMPLE_SSO_KEY)]
+    #signature = build_signature(params, settings.SIMPLE_SSO_SECRET)
+    #params.append(('signature', signature))
+    #requests.post(restarter, dict(params))
 
 def apphook_pre_checker(instance, **kwargs):
     """
