@@ -4,7 +4,7 @@ Django==1.4.2
 requests==0.8.1
 django-simple-sso[client]==0.9.0
 webservices==0.1
-PIL==1.1.7
+Pillow==2.0.0
 django-cms==2.3
 gunicorn==0.13.4
 djeesefs==0.1.7
