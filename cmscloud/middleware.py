@@ -42,7 +42,7 @@ class ToolbarMiddleware(object):
 
 class AccessControlMiddleware(object):
     def process_request(self, request):
-        if not self.request.user.is_authenticated():
+        if not request.user.is_authenticated():
             view = LoginView.as_view(client=Client.from_dsn(settings.SSO_DSN))
             return view(request)
         return None
