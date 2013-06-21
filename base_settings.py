@@ -15,8 +15,30 @@ MANAGERS = ADMINS = ()
 LANGUAGES = [('en', 'en')]
 DEFAULT_LANGUAGE = 0
 
+"""
+VCAP_SERVICES=
+{
+  cleardb-n/a: [
+    {
+      name: "cleardb-1",
+      label: "cleardb-n/a",
+      plan: "spark",
+      credentials: {
+        name: "ad_c6f4446532610ab",
+        hostname: "us-cdbr-east-03.cleardb.com",
+        port: "3306",
+        username: "b5d435f40dd2b2",
+        password: "ebfc00ac",
+        uri: "mysql://b5d435f40dd2b2:ebfc00ac@us-cdbr-east-03.cleardb.com:3306/ad_c6f4446532610ab",
+        jdbcUrl: "jdbc:mysql://b5d435f40dd2b2:ebfc00ac@us-cdbr-east-03.cleardb.com:3306/ad_c6f4446532610ab"
+      }
+    }
+  ]
+}
+"""
+
 vcap_services = json.loads(os.environ['VCAP_SERVICES'])
-mysql_srv = vcap_services['mysql-5.1'][0]
+mysql_srv = vcap_services['cleardb-n/a'][0]
 cred = mysql_srv['credentials']
 DATABASES = {
     'default': {
@@ -55,18 +77,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
-
-MIDDLEWARE_CLASSES = [
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'cms.middleware.multilingual.MultilingualURLMiddleware',
-    'cms.middleware.page.CurrentPageMiddleware',
-    'cms.middleware.user.CurrentUserMiddleware',
-    'cmscloud.middleware.ToolbarMiddleware',
-]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
