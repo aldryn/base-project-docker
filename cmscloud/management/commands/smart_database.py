@@ -10,16 +10,39 @@ from optparse import make_option
 from south.management.commands.migrate import Command as Migrate
 from south.management.commands.syncdb import Command as SyncDB
 from south.models import MigrationHistory
-import requests
 from cmscloud.serialize import Loader
+
+
+def dummy_http():
+    from BaseHTTPServer import BaseHTTPRequestHandler
+    import SocketServer
+    import os
+
+    content = 'nothing'
+    content_lenth = len(content)
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header('Content-type', 'text/plain')
+            self.send_header('Content-length', content_lenth)
+            self.end_headers()
+            self.wfile.write(content)
+
+
+    httpd = SocketServer.TCPServer(('', int(os.environ['PORT'])), Handler)
+    print 'serving nothing at port', os.environ['PORT']
+    httpd.serve_forever()
 
 
 class Command(NoArgsCommand):
     option_list = NoArgsCommand.option_list + (
         make_option('--key', action='store', dest='key'),
+        make_option('--idle', action='store_true', dest='idle'),
     ) 
     def handle_noargs(self, **options):
         key = options.pop('key', '')
+        idle = options.pop('idle', False)
         syncdb_opts = deepcopy(options)
         syncdb_opts['migrate_all'] = False
         syncdb_opts['interactive'] = False
@@ -53,6 +76,6 @@ class Command(NoArgsCommand):
             loader.load(datayaml)
         else:
             self.stdout.write("data.yaml not found, not loading any data.\n")
-        if key:
-            requests.post('https://control.djeese.com/api/internal/v1/heroku-sync-command/', data={'key': key})
+        if idle:
+            dummy_http()
 

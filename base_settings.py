@@ -16,25 +16,38 @@ LANGUAGES = [('en', 'en')]
 DEFAULT_LANGUAGE = 0
 
 """
-VCAP_SERVICES=
-{
-  cleardb-n/a: [
-    {
-      name: "cleardb-1",
-      label: "cleardb-n/a",
-      plan: "spark",
-      credentials: {
-        name: "ad_c6f4446532610ab",
-        hostname: "us-cdbr-east-03.cleardb.com",
-        port: "3306",
-        username: "b5d435f40dd2b2",
-        password: "ebfc00ac",
-        uri: "mysql://b5d435f40dd2b2:ebfc00ac@us-cdbr-east-03.cleardb.com:3306/ad_c6f4446532610ab",
-        jdbcUrl: "jdbc:mysql://b5d435f40dd2b2:ebfc00ac@us-cdbr-east-03.cleardb.com:3306/ad_c6f4446532610ab"
-      }
-    }
-  ]
-}
+{'HOME': '/home/vcap/app',
+ 'LANG': 'en_US.UTF-8',
+ 'LD_LIBRARY_PATH': '/app/.heroku/vendor/lib',
+ 'LIBRARY_PATH': '/app/.heroku/vendor/lib',
+ 'MEMORY_LIMIT': '64m',
+ 'OLDPWD': '/home/vcap',
+ 'PATH': '/home/vcap/app/.heroku/python/bin:/bin:/usr/bin',
+ 'PORT': '64467',
+ 'PWD': '/home/vcap/app',
+ 'PYTHONHASHSEED': 'random',
+ 'PYTHONHOME': '/app/.heroku/python',
+ 'PYTHONPATH': '/app/',
+ 'PYTHONUNBUFFERED': 'true',
+ 'SHLVL': '2',
+ 'TMPDIR': '/home/vcap/tmp',
+ 'USER': 'vcap',
+ 'VCAP_APPLICATION': '{"application_users":[],"instance_id":"a24db9877ac60859af39cb7376dc6b4c","instance_index":0,"application_version":"54f908d5-5b36-4c6f-8ad2-d699e7ebe502","application_name":"ojii-cftest-syncdb","application_uris":["ojii-cftest-syncdb.cfapps.io"],"started_at":"2013-06-21 07:47:00 +0000","started_at_timestamp":1371800820,"host":"0.0.0.0","port":64467,"limits":{"mem":64,"disk":1024,"fds":16384},"version":"54f908d5-5b36-4c6f-8ad2-d699e7ebe502","name":"ojii-cftest-syncdb","uris":["ojii-cftest-syncdb.cfapps.io"],"users":[],"start":"2013-06-21 07:47:00 +0000","state_timestamp":1371800820}',
+ 'VCAP_APP_HOST': '0.0.0.0',
+ 'VCAP_APP_PORT': '64467',
+ 'VCAP_CONSOLE_IP': '0.0.0.0',
+ 'VCAP_CONSOLE_PORT': '64468',
+ 'VCAP_SERVICES': {u'cleardb-n/a': [{u'credentials': {u'hostname': u'us-cdbr-east-04.cleardb.com',
+                                    u'jdbcUrl': u'jdbc:mysql://bd7a8a30f87b67:4237fa6d@us-cdbr-east-04.cleardb.com:3306/ad_d60041824df843a',
+                                    u'name': u'ad_d60041824df843a',
+                                    u'password': u'4237fa6d',
+                                    u'port': u'3306',
+                                    u'uri': u'mysql://bd7a8a30f87b67:4237fa6d@us-cdbr-east-04.cleardb.com:3306/ad_d60041824df843a?reconnect=true',
+                                    u'username': u'bd7a8a30f87b67'},
+                   u'label': u'cleardb-n/a',
+                   u'name': u'mysql-ojii-cftest',
+                   u'plan': u'spark'}]},
+ '_': '/home/vcap/app/.heroku/python/bin/python'}
 """
 
 vcap_services = json.loads(os.environ['VCAP_SERVICES'])
@@ -44,7 +57,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': cred['name'],
-        'USER': cred['user'],
+        'USER': cred['username'],
         'PASSWORD': cred['password'],
         'HOST': cred['hostname'],
         'PORT': cred['port'],
