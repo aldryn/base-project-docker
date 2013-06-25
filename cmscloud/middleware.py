@@ -3,8 +3,10 @@
 Edit Toolbar middleware
 """
 from cmscloud.cms_toolbar import SSOCMSToolbar
+from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from simple_sso.sso_client.client import LoginView, Client
 
 
 def toolbar_plugin_processor(instance, placeholder, rendered_content, original_context):
@@ -36,3 +38,11 @@ class ToolbarMiddleware(object):
         response = request.toolbar.request_hook()
         if isinstance(response, HttpResponse):
             return response
+
+
+class AccessControlMiddleware(object):
+    def process_request(self, request):
+        if not request.user.is_authenticated():
+            view = LoginView.as_view(client=Client.from_dsn(settings.SSO_DSN))
+            return view(request)
+        return None
