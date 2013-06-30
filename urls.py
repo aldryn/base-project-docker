@@ -13,7 +13,7 @@ client = Client.from_dsn(settings.SSO_DSN)
 
 urlpatterns = patterns('',
     url(r'^%s(?P<path>.*)$' % re.escape(settings.STATIC_URL.lstrip('/')), 'django.contrib.staticfiles.views.serve', {'insecure': True}),
-    url(r'^admin/-cmscloud-api/', include('cmscloud.urls')),
+    url(r'^admin/~cmscloud-api/', include('cmscloud.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', include(client.get_urls())),
     url(r'^', include('cms.urls')),
