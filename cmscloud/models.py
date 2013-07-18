@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from cms.models.titlemodels import Title
-from django.conf import settings
+from cms.models import Page
 from django.db.models.signals import post_save, pre_save, post_delete
-import requests
 
 
 def trigger_restart():
@@ -20,19 +18,24 @@ def apphook_pre_checker(instance, **kwargs):
     Store the old application_urls and path on the instance
     """
     try:
-        instance._old_data = Title.objects.filter(pk=instance.pk).values_list('application_urls', 'path')[0]
-    except IndexError:
+        page = Page.objects.get(pk=instance.pk)
+    except Page.DoesNotExist:
         instance._old_data = (None, None)
+        return
+    paths = sorted(page.title_set.values_list('path', flat=True))
+    instance._old_data = (page.application_urls, paths)
 
 def apphook_post_checker(instance, **kwargs):
     """
     Check if applciation_urls and path changed on the instance
     """
-    old_apps, old_path = getattr(instance, '_old_data', (None, None))
+    old_apps, old_paths = getattr(instance, '_old_data', (None, None))
     if old_apps != instance.application_urls:
         trigger_restart()
-    elif old_path != instance.path and instance.application_urls:
-        trigger_restart()
+    else:
+        paths = sorted(instance.title_set.values_list('path', flat=True))
+        if old_paths != paths and instance.application_urls:
+            trigger_restart()
 
 def apphook_post_delete_checker(instance, **kwargs):
     """
@@ -41,6 +44,6 @@ def apphook_post_delete_checker(instance, **kwargs):
     if instance.application_urls:
         trigger_restart()
 
-pre_save.connect(apphook_pre_checker, sender=Title)
-post_save.connect(apphook_post_checker, sender=Title)
-post_delete.connect(apphook_post_delete_checker, sender=Title)
+pre_save.connect(apphook_pre_checker, sender=Page)
+post_save.connect(apphook_post_checker, sender=Page)
+post_delete.connect(apphook_post_delete_checker, sender=Page)

@@ -33,11 +33,12 @@ except:
     import traceback; traceback.print_exc()
     print os.environ
     print "FAILED TO GET DATABASE CREDENTIALS!!!"
-    print "USING IN MEMORY SQLITE3"
+    localname = os.environ.get("LOCAL_DATABASE_NAME", ":memory:")
+    print "USING IN %s SQLITE3" % localname
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': ':memory:'
+            'NAME': localname,
         }
     }
 
@@ -101,13 +102,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'djangocms_admin_style',  # must be before admin to override base template
     'django.contrib.admin',
     'django.contrib.staticfiles',
     'cms',
+    'cms.stacks',
     'menus',
     'mptt',
     'south',
-    'cms.plugins.text',
+    'djangocms_text_ckeditor',
     'cms.plugins.picture',
     'cms.plugins.link',
     'cms.plugins.file',

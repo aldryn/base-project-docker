@@ -11,6 +11,6 @@
 
 {% block content %}
 <div id="content-main">
-<a href="{% url simple-sso-login %}?next={{ request.path }}">{% trans "Login" %}</a>
+<a href="{% url "simple-sso-login" %}?next={{ request.path }}">{% trans "Login" %}</a>
 </div>
 {% endblock %}
