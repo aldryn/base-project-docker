@@ -16,18 +16,9 @@ LANGUAGES = [('en', 'en')]
 DEFAULT_LANGUAGE = 0
 
 try:
-    vcap_services = json.loads(os.environ['VCAP_SERVICES'])
-    psql_srv = vcap_services['postgresql-9.1'][0]
-    cred = psql_srv['credentials']
+    import dj_database_url
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': cred['name'],
-            'USER': cred['username'],
-            'PASSWORD': cred['password'],
-            'HOST': cred['hostname'],
-            'PORT': cred['port'],
-        }
+        'default': dj_database_url.config()
     }
 except:
     import traceback; traceback.print_exc()
