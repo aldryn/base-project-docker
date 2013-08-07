@@ -15,24 +15,6 @@ MANAGERS = ADMINS = ()
 LANGUAGES = [('en', 'en')]
 DEFAULT_LANGUAGE = 0
 
-try:
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.config()
-    }
-except:
-    import traceback; traceback.print_exc()
-    print os.environ
-    print "FAILED TO GET DATABASE CREDENTIALS!!!"
-    localname = os.environ.get("LOCAL_DATABASE_NAME", ":memory:")
-    print "USING IN %s SQLITE3" % localname
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': localname,
-        }
-    }
-
 TIME_ZONE = 'Europe/Zurich'
 
 LANGUAGE_CODE = 'en'
