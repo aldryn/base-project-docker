@@ -34,7 +34,7 @@ CONTENT = """<!DOCTYPE html>
       </div>
       <div class="register-icon error-icon"></div>
       <h3>Login required</h3>
-      <p><a class="button blue" href="/login">Login</a></p>
+      <p><a class="button blue" href="/login/">Login</a></p>
     </section>
     <section class="inverted">
       <h4>Get your free account today! <a href="/register/">Sign up</a></h4>
