@@ -15,7 +15,7 @@ CONTENT = """<!DOCTYPE html>
 <!--<![endif]-->
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Login required</title>
+  <title>Your site is ready</title>
   <link rel="shortcut icon" href="https://static.django-cms.com/favicon.ico">
   <link rel="apple-touch-icon" href="https://static.django-cms.com/apple-touch-icon.png">
   <link rel="stylesheet" href="https://static.django-cms.com/stylesheets/style.css?v=2"><!--[if lte IE 9]>
@@ -32,9 +32,10 @@ CONTENT = """<!DOCTYPE html>
       <div id="logo">
         <a href="http://www.django-cms.org" class="logo dark">django-cms.org</a>
       </div>
-      <div class="register-icon error-icon"></div>
-      <h3>Login required</h3>
-      <p><a class="button blue" href="/login/">Login</a></p>
+      <div class="register-icon success-icon"></div>
+      <h3>Your site is ready</h3>
+      <p>Just click on the login button to access it:</p>
+      <p style="margin-top:20px"><a class="button blue" href="/login/">Login</a></p>
     </section>
     <section class="inverted">
       <h4>Get your free account today! <a href="/register/">Sign up</a></h4>
