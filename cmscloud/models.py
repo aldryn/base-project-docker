@@ -3,6 +3,7 @@ from cms.models import Page
 from django.core.signals import request_finished
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.conf import settings
+from cmscloud.template_api import registry
 import requests
 
 DISPATCH_UID = 'aldryn-cms-cloud-apphook'
@@ -49,3 +50,22 @@ def apphook_post_delete_checker(instance, **kwargs):
 pre_save.connect(apphook_pre_checker, sender=Page)
 post_save.connect(apphook_post_checker, sender=Page)
 post_delete.connect(apphook_post_delete_checker, sender=Page)
+
+
+def live_reload():
+    live_reload_credential_url = getattr(settings, 'LIVERELOAD_CREDENTIAL_URL', None)
+    if not live_reload_credential_url:
+        return ''
+    return '''<script src="https://static.django-cms.com/javascripts/libs/klass.js" type="text/javascript"></script>
+    <script src="https://static.django-cms.com/javascripts/libs/autobahn.min.js" type="text/javascript"></script>
+    <script src="https://static.django-cms.com/javascripts/realtime.js" type="text/javascript"></script>
+    <script src="https://static.django-cms.com/javascripts/livereload.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            LiveReload({
+                "credential_url": "%s"
+            });
+        });
+    </script>''' % live_reload_credential_url
+
+registry.add_to_tail(live_reload())
