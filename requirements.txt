@@ -13,7 +13,7 @@ certifi==0.0.8
 chardet==1.0.1
 cmscloud-client==0.3.0
 django-classy-tags==0.4
-django-cms-beta==ea6aed6b39a6156bd4a9ba98c287e921cf251ef9
+django-cms-beta==201c071de64ae256ee7e238e99932a3fd4531fd7
 django-mptt==0.5.2
 django-sekizai==0.7
 django-simple-sso==0.9.0
