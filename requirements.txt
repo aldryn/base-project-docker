@@ -13,7 +13,7 @@ certifi==0.0.8
 chardet==1.0.1
 cmscloud-client==0.3.0
 django-classy-tags==0.4
-https://github.com/divio/django-cms/archive/1138ee56b1638cb444edaac72ac55a95940cdd3e.tar.gz#egg=django-cms
+https://github.com/divio/django-cms/archive/9a6aa1a1d3d568d616ff5ab333f265ce3d5bc6f7.tar.gz#egg=django-cms
 django-mptt==0.5.2
 django-sekizai==0.7
 django-simple-sso==0.9.0

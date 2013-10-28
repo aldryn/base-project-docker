@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from cms.models.pluginmodel import CMSPlugin
-from cms.models.titlemodels import Title
+from cms.models.pagemodel import Page
 from collections import defaultdict
 from django.conf import settings
 import json
@@ -18,7 +18,7 @@ def check_plugins(request):
 
 def check_apphooks(request):
     apphooks = request.GET.get('apphooks', '').split(',')
-    count = Title.objects.filter(application_urls__in=apphooks).count()
+    count = Page.objects.filter(application_urls__in=apphooks).count()
     return HttpResponse(str(count))
 
 def errors_to_json(form):
