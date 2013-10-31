@@ -4,8 +4,7 @@ from django.conf.urls import patterns, url
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = patterns('',
-    url(r'^check-plugins/$', 'cmscloud.views.check_plugins'),
-    url(r'^check-apphooks/$', 'cmscloud.views.check_apphooks'),
+    url(r'^check-uninstall/$', 'cmscloud.views.check_uninstall_ok'),
     url(r'^add-file/$', csrf_exempt(Add.as_view())),
     url(r'^delete-file/$', csrf_exempt(Delete.as_view())),
 )
