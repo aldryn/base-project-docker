@@ -43,7 +43,6 @@ def check_uninstall_ok(request):
                 cls = getattr(module, cls_name)
                 if hasattr(cls, 'cms_enabled') and cls.cms_enabled:
                     menus.append(cls.__name__)
-    print plugin_names,apphooks,menus
     plugin_count = {}
     for plugin_type in plugin_names:
         count = CMSPlugin.objects.filter(plugin_type=plugin_type).count()
