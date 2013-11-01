@@ -1,14 +1,70 @@
 # -*- coding: utf-8 -*-
+from collections import defaultdict
+import inspect
+import json
+
+from cms.app_base import CMSApp
 from cms.models.pluginmodel import CMSPlugin
 from cms.models.pagemodel import Page
-from collections import defaultdict
+from cms.plugin_base import CMSPluginBase
 from django.conf import settings
-import json
 from cmscloud.forms import AddForm, DeleteForm
 from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views.generic import View
+from cms.utils.django_load import get_module
 import os
+
+
+def check_uninstall_ok(request):
+    apps = request.GET.get('apps', '').split(',')
+    if apps == ['']:
+        return HttpResponseBadRequest("no apps provided")
+    plugin_names = []
+    apphooks = []
+    menus = []
+    for app in apps:
+        module = get_module(app, "cms_plugins", False, False)
+        if module:
+            for cls_name in dir(module):
+                print cls_name
+                cls = getattr(module, cls_name)
+                if inspect.isclass(cls) and issubclass(cls, CMSPluginBase):
+                    plugin_names.append(cls.__name__)
+        module = get_module(app, "cms_app", False, False)
+        if module:
+            for cls_name in dir(module):
+                cls = getattr(module, cls_name)
+                if inspect.isclass(cls) and issubclass(cls, CMSApp):
+                    apphooks.append(cls.__name__)
+        module = get_module(app, "menu", False, False)
+        if module:
+            for cls_name in dir(module):
+                cls = getattr(module, cls_name)
+                if hasattr(cls, 'cms_enabled') and cls.cms_enabled:
+                    menus.append(cls.__name__)
+    print plugin_names,apphooks,menus
+    plugin_count = {}
+    for plugin_type in plugin_names:
+        count = CMSPlugin.objects.filter(plugin_type=plugin_type).count()
+        if count:
+            plugin_count[plugin_type] = count
+    apphook_count = []
+    for hook in apphooks:
+        exists = Page.objects.filter(application_urls=hook).exists()
+        if exists:
+            print hook, Page.objects.filter(application_urls=hook)
+            apphook_count.append(hook)
+    menu_count = []
+    for menu in menus:
+        exists = Page.objects.filter(navigation_extenders=menu).exists()
+        if exists:
+            menu_count.append(menu)
+    if plugin_count or apphook_count or menu_count:
+        result = {'plugins': plugin_count, 'apphooks': apphook_count, 'menus': menu_count}
+    else:
+        result = 'ok'
+    return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 def check_plugins(request):
@@ -16,10 +72,12 @@ def check_plugins(request):
     count = CMSPlugin.objects.filter(plugin_type__in=plugins).count()
     return HttpResponse(str(count))
 
+
 def check_apphooks(request):
     apphooks = request.GET.get('apphooks', '').split(',')
     count = Page.objects.filter(application_urls__in=apphooks).count()
     return HttpResponse(str(count))
+
 
 def errors_to_json(form):
     output = defaultdict(list)
