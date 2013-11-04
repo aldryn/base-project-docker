@@ -14,7 +14,9 @@ def trigger_restart(**kwargs):
     restarter_url = getattr(settings, 'RESTARTER_URL', None)
     if not restarter_url:
         return
-    requests.post(restarter_url, data={'info': getattr(settings, 'RESTARTER_PAYLOAD', None)})
+    requests.post(restarter_url, data={
+                  'info': getattr(settings, 'RESTARTER_PAYLOAD', None)})
+
 
 def apphook_pre_checker(instance, **kwargs):
     """
@@ -28,6 +30,7 @@ def apphook_pre_checker(instance, **kwargs):
     paths = sorted(page.title_set.values_list('path', flat=True))
     instance._old_data = (page.application_urls, paths)
 
+
 def apphook_post_checker(instance, **kwargs):
     """
     Check if applciation_urls and path changed on the instance
@@ -38,7 +41,9 @@ def apphook_post_checker(instance, **kwargs):
     else:
         paths = sorted(instance.title_set.values_list('path', flat=True))
         if old_paths != paths and instance.application_urls:
-            request_finished.connect(trigger_restart, dispatch_uid=DISPATCH_UID)
+            request_finished.connect(
+                trigger_restart, dispatch_uid=DISPATCH_UID)
+
 
 def apphook_post_delete_checker(instance, **kwargs):
     """
@@ -53,7 +58,8 @@ post_delete.connect(apphook_post_delete_checker, sender=Page)
 
 
 def live_reload():
-    live_reload_credential_url = getattr(settings, 'LIVERELOAD_CREDENTIAL_URL', None)
+    live_reload_credential_url = getattr(
+        settings, 'LIVERELOAD_CREDENTIAL_URL', None)
     if not live_reload_credential_url:
         return ''
     return '''<script src="https://static.django-cms.com/javascripts/libs/klass.js" type="text/javascript"></script>
@@ -63,7 +69,8 @@ def live_reload():
     <script type="text/javascript">
         $(document).ready(function() {
             LiveReload({
-                "credential_url": "%s"
+                "credential_url": "%s",
+                "logged_user_email": "{{ request.user.email }}",
             });
         });
     </script>''' % live_reload_credential_url
