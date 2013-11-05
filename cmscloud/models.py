@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from cms.models import Page
-from django.core.signals import request_finished
-from django.db.models.signals import post_save, pre_save, post_delete
-from django.conf import settings
 from cmscloud.template_api import registry
+from django.conf import settings
+from django.core.signals import request_finished
+from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save, pre_save, post_delete
 import requests
 
 DISPATCH_UID = 'aldryn-cms-cloud-apphook'
@@ -62,17 +63,23 @@ def live_reload():
         settings, 'LIVERELOAD_CREDENTIAL_URL', None)
     if not live_reload_credential_url:
         return ''
+    currently_logged_in_user_email_url = reverse('currently-logged-in-user-email')
     return '''<script src="https://static.django-cms.com/javascripts/libs/klass.js" type="text/javascript"></script>
     <script src="https://static.django-cms.com/javascripts/libs/autobahn.min.js" type="text/javascript"></script>
     <script src="https://static.django-cms.com/javascripts/realtime.js" type="text/javascript"></script>
     <script src="https://static.django-cms.com/javascripts/livereload.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            LiveReload({
-                "credential_url": "%s",
-                "logged_user_email": "{{ request.user.email }}",
+            $.get("%(currently_logged_in_user_email_url)s", function(email) {
+                LiveReload({
+                    "credential_url": "%(live_reload_credential_url)s",
+                    "logged_user_email": email,
+                });
             });
         });
-    </script>''' % live_reload_credential_url
+    </script>''' % {
+        'live_reload_credential_url': live_reload_credential_url,
+        'currently_logged_in_user_email_url': currently_logged_in_user_email_url,
+    }
 
 registry.add_to_tail(live_reload())

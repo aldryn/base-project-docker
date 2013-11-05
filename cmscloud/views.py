@@ -2,18 +2,20 @@
 from collections import defaultdict
 import inspect
 import json
+import os
 
 from cms.app_base import CMSApp
-from cms.models.pluginmodel import CMSPlugin
 from cms.models.pagemodel import Page
+from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_base import CMSPluginBase
+from cms.utils.django_load import get_module
 from django.conf import settings
-from cmscloud.forms import AddForm, DeleteForm
+from django.contrib.auth.decorators import login_required
 from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views.generic import View
-from cms.utils.django_load import get_module
-import os
+
+from cmscloud.forms import AddForm, DeleteForm
 
 
 def check_uninstall_ok(request):
@@ -115,3 +117,8 @@ class Delete(Add):
         full_path = os.path.join(settings.PROJECT_DIR, data['path'])
         if os.path.exists(full_path):
             os.remove(full_path)
+
+
+@login_required
+def get_currently_logged_in_user_email(request):
+    return HttpResponse(request.user.email, content_type='text/plain')
