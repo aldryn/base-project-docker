@@ -33,3 +33,5 @@ watchdog==0.6.0
 webservices==0.4
 wsgiref==0.1.2
 zope.interface==3.8.0
+# TODO: remove django-compressor from here. It should be an addon and a "boilerplate-dependency"
+django_compressor==1.3
