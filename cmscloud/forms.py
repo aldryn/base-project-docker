@@ -27,18 +27,18 @@ class DeleteForm(forms.Form):
 
 
 class AddForm(DeleteForm):
-    content = forms.FileField(required=True)
+    content = forms.FileField(required=True, allow_empty_file=True)
 
     def clean(self):
         data = super(DeleteForm, self).clean()
-        path = data['path']
-        signature_hmac = hmac.new(str(settings.CMSCLOUD_SYNC_KEY), path, hashlib.sha1)
-        uploaded_file = data['content']
-        for chunk in uploaded_file.chunks():
-            signature_hmac.update(chunk)
-        generated_signature = signature_hmac.hexdigest()
-        signature = data['signature']
-        if not constant_time_compare(signature, generated_signature):
-            raise forms.ValidationError("Invalid signature")
+        path = data.get('path')
+        uploaded_file = data.get('content')
+        signature = data.get('signature')
+        if path and uploaded_file and signature:  # otherwise there were some errors
+            signature_hmac = hmac.new(str(settings.CMSCLOUD_SYNC_KEY), path, hashlib.sha1)
+            for chunk in uploaded_file.chunks():
+                signature_hmac.update(chunk)
+            generated_signature = signature_hmac.hexdigest()
+            if not constant_time_compare(signature, generated_signature):
+                raise forms.ValidationError("Invalid signature")
         return data
-
