@@ -2,7 +2,8 @@
 """
 Access Control Middleware
 """
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
 
 
 CONTENT = """<!DOCTYPE html>
@@ -65,8 +66,16 @@ CONTENT = """<!DOCTYPE html>
 </html>
 """
 
+
 class AccessControlMiddleware(object):
     def process_request(self, request):
-        if not request.user.is_authenticated() and not request.path.startswith(('/login/', '/admin/~cmscloud-api/')):
-            return HttpResponse(CONTENT)
+        if not (request.user.is_authenticated() or
+                request.path.startswith(('/login/', '/admin/~cmscloud-api/')) or
+                request.session.get(settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME)):
+            token = request.GET.get(settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME, None)
+            if settings.SHARING_VIEW_ONLY_SECRET_TOKEN == token:
+                request.session[settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME] = token
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponse(CONTENT)
         return None
