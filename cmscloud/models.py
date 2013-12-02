@@ -64,10 +64,10 @@ def live_reload():
     if not live_reload_credential_url:
         return ''
     currently_logged_in_user_email_url = reverse('currently-logged-in-user-email')
-    return '''<script src="https://static.django-cms.com/javascripts/libs/klass.js" type="text/javascript"></script>
-    <script src="https://static.django-cms.com/javascripts/libs/autobahn.min.js" type="text/javascript"></script>
-    <script src="https://static.django-cms.com/javascripts/realtime.js" type="text/javascript"></script>
-    <script src="https://static.django-cms.com/javascripts/livereload.js" type="text/javascript"></script>
+    return '''<script src="https://static.aldryn.com/javascripts/libs/klass.js" type="text/javascript"></script>
+    <script src="https://static.aldryn.com/javascripts/libs/autobahn.min.js" type="text/javascript"></script>
+    <script src="https://static.aldryn.com/javascripts/realtime.js" type="text/javascript"></script>
+    <script src="https://static.aldryn.com/javascripts/livereload.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $.get("%(currently_logged_in_user_email_url)s", function(email) {

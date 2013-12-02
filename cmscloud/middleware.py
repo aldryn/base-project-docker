@@ -17,12 +17,12 @@ CONTENT = """<!DOCTYPE html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Your site is ready</title>
-  <link rel="shortcut icon" href="https://static.django-cms.com/favicon.ico">
-  <link rel="apple-touch-icon" href="https://static.django-cms.com/apple-touch-icon.png">
-  <link rel="stylesheet" href="https://static.django-cms.com/stylesheets/style.css?v=2"><!--[if lte IE 9]>
-  <link rel="stylesheet" href="https://static.django-cms.com/stylesheets/ie.css" type="text/css" media="screen" />
+  <link rel="shortcut icon" href="https://static.aldryn.com/favicon.ico">
+  <link rel="apple-touch-icon" href="https://static.aldryn.com/apple-touch-icon.png">
+  <link rel="stylesheet" href="https://static.aldryn.com/stylesheets/style.css?v=2"><!--[if lte IE 9]>
+  <link rel="stylesheet" href="https://static.aldryn.com/stylesheets/ie.css" type="text/css" media="screen" />
   <![endif]--><!--[if lt IE 8]>
-  <script src='https://static.django-cms.com/javascripts/libs/modernizr.min.js'></script>
+  <script src='https://static.aldryn.com/javascripts/libs/modernizr.min.js'></script>
   <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
   <![endif]-->
 </head>
@@ -56,7 +56,7 @@ CONTENT = """<!DOCTYPE html>
     document.write(unescape("%3Cscript src='" + ((document.location.protocol=="https:")?"https://www.snapengage.com":"http://www.snapengage.com") + "/snapabug.js' type='text/javascript'%3E%3C/script%3E"));
   </script>
   <script type="text/javascript">
-    SnapABug.setButton("https://static.django-cms.com/images/snapengage_help.png");
+    SnapABug.setButton("https://static.aldryn.com/images/snapengage_help.png");
     SnapABug.addButton("568d7304-737a-41d8-9a29-eec2e8bcb699","1","50%");
   </script> <!--[if lt IE 9 ]>
                 <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
