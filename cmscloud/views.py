@@ -13,6 +13,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
+from django.template.loader import render_to_string
 from django.views.generic import View
 
 from cmscloud.forms import AddForm, DeleteForm
@@ -120,5 +121,17 @@ class Delete(Add):
 
 
 @login_required
-def get_currently_logged_in_user_email(request):
-    return HttpResponse(request.user.email, content_type='text/plain')
+def get_livereload_iframe_content(request):
+    live_reload_credential_url = getattr(
+        settings, 'LIVERELOAD_CREDENTIAL_URL', None)
+    if live_reload_credential_url:
+        CONTENT = render_to_string(
+            'cmscloud/livereload_iframe_content.html',
+            {
+                'CMSCLOUD_STATIC_URL': settings.CMSCLOUD_STATIC_URL,
+                'LIVE_RELOAD_CREDENTIAL_URL': live_reload_credential_url,
+                'CURRENTLY_LOGGED_IN_USER_EMAIL': request.user.email
+            })
+    else:
+        CONTENT = ''
+    return HttpResponse(CONTENT)
