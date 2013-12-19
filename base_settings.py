@@ -64,7 +64,10 @@ CMS_TEMPLATES = [
 
 ROOT_URLCONF = 'urls'
 
+CMSCLOUD_STATIC_URL = 'https://static.aldryn.com/'
+
 TEMPLATE_DIRS = [
+    os.path.join(PROJECT_DIR, 'cmscloud/templates'),
     os.path.join(PROJECT_DIR, 'templates'),
     os.path.join(PROJECT_DIR, 'custom_templates'),
 ]

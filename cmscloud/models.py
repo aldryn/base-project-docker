@@ -63,23 +63,7 @@ def live_reload():
         settings, 'LIVERELOAD_CREDENTIAL_URL', None)
     if not live_reload_credential_url:
         return ''
-    currently_logged_in_user_email_url = reverse('currently-logged-in-user-email')
-    return '''<script src="https://static.aldryn.com/javascripts/libs/klass.js" type="text/javascript"></script>
-    <script src="https://static.aldryn.com/javascripts/libs/autobahn.min.js" type="text/javascript"></script>
-    <script src="https://static.aldryn.com/javascripts/realtime.js" type="text/javascript"></script>
-    <script src="https://static.aldryn.com/javascripts/livereload.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $.get("%(currently_logged_in_user_email_url)s", function(email) {
-                LiveReload({
-                    "credential_url": "%(live_reload_credential_url)s",
-                    "logged_user_email": email,
-                });
-            });
-        });
-    </script>''' % {
-        'live_reload_credential_url': live_reload_credential_url,
-        'currently_logged_in_user_email_url': currently_logged_in_user_email_url,
-    }
+
+    return '<iframe src="%s"></iframe>' % reverse('livereload-iframe-content')
 
 registry.add_to_tail(live_reload())
