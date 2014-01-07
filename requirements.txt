@@ -11,7 +11,7 @@ argh==0.23.2
 argparse==1.2.1
 certifi==0.0.8
 chardet==1.0.1
-cmscloud-client==0.5.1
+cmscloud-client==0.5.3
 django-classy-tags==0.4
 https://github.com/divio/django-cms/archive/2e346d63e290b06e22c931ad52792a0804c6078a.tar.gz#egg=django-cms
 django-mptt==0.5.2
