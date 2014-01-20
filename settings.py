@@ -1,11 +1,14 @@
 from base_settings import *
-import os, json
+import json
+import os
 
-fobj = open(os.path.join(os.path.dirname(__file__), 'settings.json'))
-locals().update(json.load(fobj))
-fobj.close()
+with open(os.path.join(os.path.dirname(__file__), 'settings.json')) as fobj:
+    locals().update(json.load(fobj))
 
 CMS_LANGUAGES = {int(key) if isinstance(key, basestring) and key.isdigit() else key: value for key, value in CMS_LANGUAGES.items()}
+
+with open(os.path.join(os.path.dirname(__file__), 'cms_templates.json')) as fobj:
+    locals()['CMS_TEMPLATES'] = json.load(fobj)
 
 
 if 'DATABASES' not in locals():
