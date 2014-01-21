@@ -12,8 +12,10 @@ class DeleteForm(forms.Form):
 
     def clean_path(self):
         path = self.cleaned_data.get('path', '')
-        if not path.startswith(('static/', 'templates/')):
-            raise forms.ValidationError("Invalid path")
+        if path == 'cms_templates.json':
+            return path
+        elif not path.startswith(('static/', 'templates/')):
+            raise forms.ValidationError('Invalid path: "%s"' % path)
         return path
 
     def clean(self):
