@@ -19,7 +19,7 @@ django-sekizai==0.7
 django-simple-sso==0.9.3
 djangocms-admin-style==0.2.0
 djangocms-text-ckeditor==2.0.5
-aldryn-snake==0.0.1
+aldryn-snake==0.0.2
 djeesefs==0.1.11
 docopt==0.6.1
 gunicorn==0.17.4

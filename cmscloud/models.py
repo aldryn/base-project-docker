@@ -58,7 +58,7 @@ post_save.connect(apphook_post_checker, sender=Page)
 post_delete.connect(apphook_post_delete_checker, sender=Page)
 
 
-def live_reload():
+def live_reload(request=None):
     live_reload_credential_url = getattr(
         settings, 'LIVERELOAD_CREDENTIAL_URL', None)
     if not live_reload_credential_url:
@@ -66,4 +66,4 @@ def live_reload():
 
     return '<iframe src="%s"></iframe>' % reverse('livereload-iframe-content')
 
-# registry.add_to_tail(live_reload())
+registry.add_to_tail(live_reload)
