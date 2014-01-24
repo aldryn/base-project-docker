@@ -66,4 +66,4 @@ def live_reload():
 
     return '<iframe src="%s"></iframe>' % reverse('livereload-iframe-content')
 
-registry.add_to_tail(live_reload())
+# registry.add_to_tail(live_reload())
