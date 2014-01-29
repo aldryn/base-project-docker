@@ -14,7 +14,7 @@ chardet==1.0.1
 cmscloud-client==0.5.3
 django-classy-tags==0.4
 https://github.com/divio/django-cms/archive/740e0463bd49c908762fa04fbbd3b065912503cb.tar.gz#egg=django-cms
-django-mptt==0.5.2
+django-mptt==0.6
 django-sekizai==0.7
 django-simple-sso==0.9.3
 djangocms-admin-style==0.2.0
