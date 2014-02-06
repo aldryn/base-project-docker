@@ -120,18 +120,17 @@ class Delete(Add):
             os.remove(full_path)
 
 
-@login_required
 def get_livereload_iframe_content(request):
-    live_reload_credential_url = getattr(
-        settings, 'LIVERELOAD_CREDENTIAL_URL', None)
-    if live_reload_credential_url:
-        CONTENT = render_to_string(
-            'cmscloud/livereload_iframe_content.html',
-            {
-                'CMSCLOUD_STATIC_URL': settings.CMSCLOUD_STATIC_URL,
-                'LIVE_RELOAD_CREDENTIAL_URL': live_reload_credential_url,
-                'CURRENTLY_LOGGED_IN_USER_EMAIL': request.user.email
-            })
-    else:
-        CONTENT = ''
+    CONTENT = ''
+    if request.user.is_authenticated():
+        live_reload_credential_url = getattr(
+            settings, 'LIVERELOAD_CREDENTIAL_URL', None)
+        if live_reload_credential_url:
+            CONTENT = render_to_string(
+                'cmscloud/livereload_iframe_content.html',
+                {
+                    'CMSCLOUD_STATIC_URL': settings.CMSCLOUD_STATIC_URL,
+                    'LIVE_RELOAD_CREDENTIAL_URL': live_reload_credential_url,
+                    'CURRENTLY_LOGGED_IN_USER_EMAIL': request.user.email
+                })
     return HttpResponse(CONTENT)
