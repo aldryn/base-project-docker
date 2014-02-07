@@ -64,6 +64,6 @@ def live_reload(request=None):
     if not live_reload_credential_url:
         return ''
 
-    return '<iframe src="%s"></iframe>' % reverse('livereload-iframe-content')
+    return '<iframe src="%s" style="display: none;"></iframe>' % reverse('livereload-iframe-content')
 
 registry.add_to_tail(live_reload)
