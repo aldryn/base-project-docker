@@ -25,7 +25,7 @@ if 'DATABASES' not in locals():
 
 # TODO: remove django-filer stuff from here. It should be an addon.
 THUMBNAIL_QUALITY = 95
-# THUMBNAIL_HIGH_RESOLUTION = False  # causing timeouts?
+# THUMBNAIL_HIGH_RESOLUTION = False  # FIXME: enabling THUMBNAIL_HIGH_RESOLUTION causes timeouts/500!
 THUMBNAIL_PRESERVE_EXTENSIONS = ['png', 'gif']
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
