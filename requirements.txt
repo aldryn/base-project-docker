@@ -27,7 +27,8 @@ djangocms-googlemap==0.0.1
 aldryn-snake==0.0.2
 djeesefs==0.1.13
 docopt==0.6.1
-gunicorn==0.17.4
+# gunicorn==0.17.4
+gunicorn==18.0
 html5lib==1.0b2
 itsdangerous==0.22
 pathtools==0.1.2
@@ -46,3 +47,4 @@ django-filer==0.9.5
 cmsplugin-filer==0.9.5
 django-polymorphic==0.5.3
 easy-thumbnails==1.4
+dj-static==0.0.5

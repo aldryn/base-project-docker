@@ -27,13 +27,12 @@ USE_L10N = USE_I18N = True
 MEDIA_ROOT = os.path.join(DATA_ROOT, 'media')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(DATA_ROOT, 'static')
+STATIC_ROOT = os.path.join(DATA_ROOT, 'static_collected')
 STATIC_URL = '/static/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, 'custom_static'),
     os.path.join(PROJECT_DIR, 'static'),
 ]
 
