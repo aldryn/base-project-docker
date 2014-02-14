@@ -58,6 +58,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'cms.context_processors.media',
     'cmscloud.context_processors.google_analytics',
     'cmscloud.context_processors.boilerplate',
+    'cmscloud.context_processors.debug',
     'aldryn_snake.template_api.template_processor',
 ]
 
