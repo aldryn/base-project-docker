@@ -51,3 +51,16 @@ for app in ['reversion']:
 for middleware in ['cmscloud.middleware.CurrentSiteMiddleware']:
     if not middleware in MIDDLEWARE_CLASSES:
         MIDDLEWARE_CLASSES.append(middleware)
+
+
+# TODO: move this to ckeditor addon aldyn config when we extract it from the base project
+# boilerplate should provide /static/js/modules/ckeditor.wysiwyg.js and /static/css/base.css
+CKEDITOR_SETTINGS = {
+    'height': 300,
+    'stylesSet': 'default:/static/js/modules/ckeditor.wysiwyg.js',
+    'contentsCss': ['/static/css/base.css'],
+    'language': '{{ language }}',
+    'toolbar': 'CMS',
+    'skin': 'moono',
+    'extraPlugins': 'cmsplugins',
+}
