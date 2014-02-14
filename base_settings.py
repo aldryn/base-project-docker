@@ -47,6 +47,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+# WARN: these are all overwritten from settings.json! (I think)
 TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.i18n',
@@ -56,7 +57,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.messages.context_processors.messages',
     'sekizai.context_processors.sekizai',
     'cms.context_processors.media',
-    'cmscloud.context_processors.google_analytics',
     'cmscloud.context_processors.boilerplate',
     'cmscloud.context_processors.debug',
     'aldryn_snake.template_api.template_processor',
