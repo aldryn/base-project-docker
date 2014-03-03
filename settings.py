@@ -75,3 +75,37 @@ CKEDITOR_SETTINGS = {
     'skin': 'moono',
     'extraPlugins': 'cmsplugins',
 }
+
+
+# OPTIONAL REDIS
+REDIS_URL = locals().get('REDIS_URL', '')
+if REDIS_URL:
+    import dj_redis_url
+    redis = dj_redis_url.parse(REDIS_URL)
+    CACHES = {
+        'default': {
+            'BACKEND': 'redis_cache.RedisCache',
+            'LOCATION': str(redis['HOST']) + ':' + str(redis['PORT']),  #'{HOST}:{PORT}'.format(redis),
+            'OPTIONS': {
+                'DB': 10,
+                'PASSWORD': redis['PASSWORD'],
+                'PARSER_CLASS': 'redis.connection.HiredisParser',
+                'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+                'CONNECTION_POOL_CLASS_KWARGS': {
+                    'max_connections': 50,
+                    'timeout': 20,
+                },
+                'MAX_CONNECTIONS': 1000,
+            },
+        },
+    }
+
+
+# django-health-check
+for app in [
+            'health_check',
+            'health_check_db',
+            'health_check_cache',
+            # 'health_check_storage',
+        ]:
+    INSTALLED_APPS.append(app)
