@@ -1,5 +1,6 @@
 --index-url https://devpi.us-iad-rs.aldryn.net/aldryn/dev/
 --extra-index-url http://pkg:S5Zs5h5Z@pkg.djeese.com/simple/
+--extra-index-url https://devpi.divio.ch/django-cms/pre-release/+simple/
 --extra-index-url https://divio:wlkdjeorijlerf@pkg.divio.ch/simple/
 -r generated_requirements.txt
 
@@ -14,7 +15,7 @@ certifi==0.0.8
 chardet==1.0.1
 cmscloud-client==0.5.3
 django-classy-tags==0.4
-django-cms==3.0b4.dev8
+django-cms==3.0b4.dev10
 django-mptt==0.6
 django-reversion==1.8.0
 django-sekizai==0.7
