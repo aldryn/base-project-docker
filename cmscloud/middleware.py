@@ -2,8 +2,11 @@
 """
 Access Control Middleware
 """
-from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 CONTENT = """<!DOCTYPE html>
@@ -69,16 +72,28 @@ CONTENT = """<!DOCTYPE html>
 
 class AccessControlMiddleware(object):
     def process_request(self, request):
-        if not (request.user.is_authenticated() or
-                request.path.startswith(('/login/', '/admin/~cmscloud-api/')) or
-                request.session.get(settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME)):
-            token = request.GET.get(settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME, None)
-            if settings.SHARING_VIEW_ONLY_SECRET_TOKEN == token:
-                request.session[settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME] = token
-                return HttpResponseRedirect('/')
-            else:
-                return HttpResponse(CONTENT)
-        return None
+        if (request.user.is_authenticated() or
+                request.path.startswith(('/login/', '/admin/~cmscloud-api/'))):
+            return None
+
+        token = request.GET.get(settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME, None)
+        if settings.SHARING_VIEW_ONLY_SECRET_TOKEN == token:
+            request.session[settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME] = token
+            return HttpResponseRedirect('/')
+
+        demo_access_token = request.GET.get(settings.DEMO_ACCESS_TOKEN_KEY_NAME, None)
+        if settings.DEMO_ACCESS_SECRET_STRING == demo_access_token:
+            request.session[settings.DEMO_ACCESS_TOKEN_KEY_NAME] = demo_access_token
+            try:
+                user = User.objects.get(username='aldryn demo')
+            except User.DoesNotExist:
+                user = User(username='aldryn demo', is_staff=True)
+                user.save()
+            user.backend = "%s.%s" % (ModelBackend.__module__, ModelBackend.__name__)
+            login(request, user)
+            return HttpResponseRedirect('/')
+
+        return HttpResponse(CONTENT)
 
 
 # copied from django 1.7a2: https://github.com/django/django/blob/1.7a2/django/contrib/sites/middleware.py
