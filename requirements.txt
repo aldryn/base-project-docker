@@ -18,7 +18,6 @@ django-classy-tags==0.4
 django-cms==3.0b4.dev10
 django-getenv==1.2
 django-health-check==0.3
-django-cms==3.0b4.dev10
 django-mptt==0.6
 django-redis-cache==0.11.1
 django-reversion==1.8.0
