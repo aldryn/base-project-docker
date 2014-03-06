@@ -81,17 +81,20 @@ class AccessControlMiddleware(object):
             request.session[settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME] = token
             return HttpResponseRedirect('/')
 
-        demo_access_token = request.GET.get(settings.DEMO_ACCESS_TOKEN_KEY_NAME, None)
-        if settings.DEMO_ACCESS_SECRET_STRING == demo_access_token:
-            request.session[settings.DEMO_ACCESS_TOKEN_KEY_NAME] = demo_access_token
-            try:
-                user = User.objects.get(username='aldryn demo')
-            except User.DoesNotExist:
-                user = User(username='aldryn demo', is_staff=True)
-                user.save()
-            user.backend = "%s.%s" % (ModelBackend.__module__, ModelBackend.__name__)
-            login(request, user)
-            return HttpResponseRedirect('/')
+        DEMO_ACCESS_TOKEN_KEY_NAME = getattr(settings, 'DEMO_ACCESS_TOKEN_KEY_NAME', None)
+        DEMO_ACCESS_SECRET_STRING = getattr(settings, 'DEMO_ACCESS_SECRET_STRING', None)
+        if DEMO_ACCESS_TOKEN_KEY_NAME and DEMO_ACCESS_SECRET_STRING:
+            demo_access_token = request.GET.get(DEMO_ACCESS_TOKEN_KEY_NAME, None)
+            if DEMO_ACCESS_SECRET_STRING == demo_access_token:
+                request.session[DEMO_ACCESS_TOKEN_KEY_NAME] = demo_access_token
+                try:
+                    user = User.objects.get(username='aldryn demo')
+                except User.DoesNotExist:
+                    user = User(username='aldryn demo', is_staff=True)
+                    user.save()
+                user.backend = "%s.%s" % (ModelBackend.__module__, ModelBackend.__name__)
+                login(request, user)
+                return HttpResponseRedirect('/')
 
         return HttpResponse(CONTENT)
 
