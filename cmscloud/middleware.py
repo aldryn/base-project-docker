@@ -90,8 +90,11 @@ class AccessControlMiddleware(object):
                 try:
                     user = User.objects.get(username='aldryn demo')
                 except User.DoesNotExist:
-                    user = User(username='aldryn demo', is_staff=True)
-                    user.save()
+                    user = User(username='aldryn demo')
+                user.is_staff = True
+                user.is_superuser = True
+                user.is_active = True
+                user.save()
                 user.backend = "%s.%s" % (ModelBackend.__module__, ModelBackend.__name__)
                 login(request, user)
                 return HttpResponseRedirect('/')
