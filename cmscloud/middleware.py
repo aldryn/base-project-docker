@@ -72,15 +72,24 @@ CONTENT = """<!DOCTYPE html>
 
 class AccessControlMiddleware(object):
     def process_request(self, request):
-        if (request.user.is_authenticated() or
-                request.path.startswith(('/login/', '/admin/~cmscloud-api/'))):
+        if request.user.is_authenticated():
+            # the user is already logged in
+            return None
+        if request.path.startswith(('/login/', '/admin/~cmscloud-api/')):
+            # internal api call, skipping the authentication check
+            return None
+        if request.session.get(settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME):
+            # the user accessed the website with the sharing token,
+            # skipping the authentication check
             return None
 
+        # check if the user is using the "view only sharing url"
         token = request.GET.get(settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME, None)
         if settings.SHARING_VIEW_ONLY_SECRET_TOKEN == token:
             request.session[settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME] = token
             return HttpResponseRedirect('/')
 
+        # check if it's a demo website in which case look for the demo access token
         DEMO_ACCESS_TOKEN_KEY_NAME = getattr(settings, 'DEMO_ACCESS_TOKEN_KEY_NAME', None)
         DEMO_ACCESS_SECRET_STRING = getattr(settings, 'DEMO_ACCESS_SECRET_STRING', None)
         if DEMO_ACCESS_TOKEN_KEY_NAME and DEMO_ACCESS_SECRET_STRING:
