@@ -1,15 +1,17 @@
+# -*- coding: utf-8 -*-
+import re
+
 from django.conf import settings
 from django.conf.urls import patterns, url, include
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-from simple_sso.sso_client.client import Client
 
-import re
+from cmscloud.sso import CloudUserClient
 
 admin.autodiscover()
 
 
-client = Client.from_dsn(settings.SSO_DSN)
+client = CloudUserClient.from_dsn(settings.SSO_DSN)
 
 
 urlpatterns = patterns('',

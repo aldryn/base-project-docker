@@ -118,3 +118,14 @@ LOGGING = {
         },
     }
 }
+
+###############################################################################
+# Cloud user authentication
+###############################################################################
+
+# User can change its data on Login's server.
+# We cannot do a sync of "recently changed" user data due to these reasons:
+# - security risk, leaking user data to unauthorized websites,
+# - it would require some periodic tasks (celery?),
+# - stage websites are being paused during which the sync wouldn't work
+CLOUD_USER_SESSION_EXPIRATION = 24 * 60 * 60  # 24h = 1day
