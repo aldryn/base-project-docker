@@ -3,10 +3,12 @@
 Access Control Middleware
 """
 from django.conf import settings
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
+
+from cmscloud.sso import ALDRYN_USER_SESSION_KEY
 
 
 CONTENT = """<!DOCTYPE html>
@@ -122,3 +124,23 @@ class CurrentSiteMiddleware(object):
 
     def process_request(self, request):
         request.site = Site.objects.get_current()
+
+
+class AldrynUserMiddleware(object):
+    """
+    Middleware that protects Aldryn Cloud users from hijacking their accounts
+    by previously created django users with the same email address or username.
+    """
+
+    def process_request(self, request):
+        user = request.user
+        if ALDRYN_USER_SESSION_KEY in request.session:
+            # properly logged in Aldryn Cloud user
+            return None
+        elif hasattr(user, 'aldryn_cloud_account'):
+            # this is an Aldryn Cloud account that wasn't logged in with a sso,
+            # deactivating its session.
+            user.set_unusable_password()  # sso doesn't require local passwords
+            user.save()
+            logout(request)
+            return HttpResponseRedirect('/')
