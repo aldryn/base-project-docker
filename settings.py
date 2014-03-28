@@ -59,7 +59,10 @@ for app in extra_installed_apps:
 
 
 # extra MIDDLEWARE_CLASSES
-for middleware in ['cmscloud.middleware.CurrentSiteMiddleware']:
+EXTRA_MIDDLEWARE_CLASSES = [
+    'cmscloud.middleware.CurrentSiteMiddleware',
+    'cmscloud.middleware.AldrynUserMiddleware']
+for middleware in EXTRA_MIDDLEWARE_CLASSES:
     if not middleware in MIDDLEWARE_CLASSES:
         MIDDLEWARE_CLASSES.append(middleware)
 

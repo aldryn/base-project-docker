@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-from cmscloud.template_api import registry
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.db import models
+
+from cmscloud.template_api import registry
 
 
 ###########################################
@@ -40,3 +43,19 @@ cms.signals.urls_need_reloading.connect(
 #######################
 from .monkeypatches import hide_secrets_in_debug_mode
 hide_secrets_in_debug_mode.patch()
+
+
+####################################
+# Login service user with cloud_id #
+####################################
+
+class AldrynCloudUserManager(models.Manager):
+    def get_query_set(self):
+        return super(AldrynCloudUserManager, self).get_query_set().select_related('user')
+
+
+class AldrynCloudUser(models.Model):
+    cloud_id = models.PositiveIntegerField(unique=True)
+    user = models.OneToOneField(User, unique=True, related_name='aldryn_cloud_account')
+
+    objects = AldrynCloudUserManager()
