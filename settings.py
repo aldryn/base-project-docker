@@ -41,6 +41,7 @@ THUMBNAIL_PROCESSORS = (
 THUMBNAIL_SOURCE_GENERATORS = (
     'easy_thumbnails.source_generators.pil_image',
 )
+FILER_IMAGE_USE_ICON = True
 for app in ['filer', 'easy_thumbnails', 'mptt', 'polymorphic', 'cmsplugin_filer_file', 'cmsplugin_filer_image']:
     if not app in INSTALLED_APPS:
         INSTALLED_APPS.append(app)
