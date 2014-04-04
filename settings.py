@@ -5,6 +5,11 @@ import os
 with open(os.path.join(os.path.dirname(__file__), 'settings.json')) as fobj:
     locals().update(json.load(fobj))
 
+# all strings are unicode after loading from json. But some settings MUST BE STRINGS
+if isinstance(locals().get('EMAIL_HOST_PASSWORD', None), unicode):
+    EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD.encode('ascii')
+
+
 CMS_LANGUAGES = {int(key) if isinstance(key, basestring) and key.isdigit() else key: value for key, value in CMS_LANGUAGES.items()}
 
 with open(os.path.join(os.path.dirname(__file__), 'cms_templates.json')) as fobj:
