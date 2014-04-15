@@ -1,6 +1,9 @@
-from base_settings import *
+# -*- coding: utf-8 -*-
 import json
 import os
+
+from base_settings import *  # NOQA
+from cmscloud.sync import sync_changed_files
 
 with open(os.path.join(os.path.dirname(__file__), 'settings.json')) as fobj:
     locals().update(json.load(fobj))
@@ -26,7 +29,6 @@ if 'DATABASES' not in locals():
             'NAME': localname,
         }
     }
-
 
 # TODO: remove django-filer stuff from here. It should be an addon.
 THUMBNAIL_QUALITY = 90
@@ -94,7 +96,7 @@ if REDIS_URL:
     CACHES = {
         'default': {
             'BACKEND': 'redis_cache.RedisCache',
-            'LOCATION': str(redis['HOST']) + ':' + str(redis['PORT']),  #'{HOST}:{PORT}'.format(redis),
+            'LOCATION': str(redis['HOST']) + ':' + str(redis['PORT']),  # '{HOST}:{PORT}'.format(redis),
             'OPTIONS': {
                 'DB': 10,
                 'PASSWORD': redis['PASSWORD'],
@@ -112,9 +114,22 @@ if REDIS_URL:
 
 # django-health-check
 for app in [
-            'health_check',
-            'health_check_db',
-            'health_check_cache',
-            # 'health_check_storage',
-        ]:
+        'health_check',
+        'health_check_db',
+        'health_check_cache',
+        # 'health_check_storage',
+]:
     INSTALLED_APPS.append(app)
+
+###############################################################################
+# Running the initial sync that should pull all the changes that have been made
+# while this container was being deployed (and the old one was still running
+# and receiving all the changes).
+###############################################################################
+
+if ('CMSCLOUD_SYNC_KEY' in locals() and CMSCLOUD_SYNC_KEY and
+        'LAST_BOILERPLATE_COMMIT' in locals() and LAST_BOILERPLATE_COMMIT and
+        'SYNC_CHANGED_FILES_URL' in locals() and SYNC_CHANGED_FILES_URL):
+    sync_changed_files(
+        CMSCLOUD_SYNC_KEY, LAST_BOILERPLATE_COMMIT, SYNC_CHANGED_FILES_URL,
+        PROJECT_DIR)
