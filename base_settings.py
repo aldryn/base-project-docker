@@ -129,3 +129,8 @@ LOGGING = {
 # - it would require some periodic tasks (celery?),
 # - stage websites are being paused during which the sync wouldn't work
 CLOUD_USER_SESSION_EXPIRATION = 24 * 60 * 60  # 24h = 1day
+
+###############################################################################
+# Sync changed files
+###############################################################################
+SYNC_CHANGED_FILES_SIGNATURE_MAX_AGE = 60  # 60sec

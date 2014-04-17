@@ -10,13 +10,14 @@ from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_base import CMSPluginBase
 from cms.utils.django_load import get_module
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.template.loader import render_to_string
 from django.views.generic import View
+from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 
 from cmscloud.forms import AddForm, DeleteForm
+from cmscloud.sync import sync_changed_files
 
 
 def check_uninstall_ok(request):
@@ -134,3 +135,24 @@ def get_livereload_iframe_content(request):
                     'CURRENTLY_LOGGED_IN_USER_EMAIL': request.user.email
                 })
     return HttpResponse(CONTENT)
+
+
+def trigger_sync_changed_files(request):
+    sync_key = settings.CMSCLOUD_SYNC_KEY
+    if (sync_key and settings.LAST_BOILERPLATE_COMMIT and
+            settings.SYNC_CHANGED_FILES_URL):
+        # trigger the sync only on the stage websites
+        if 'signature' in request.POST:
+            # make sure that only trusted
+            signature = request.POST['signature']
+            signer = URLSafeTimedSerializer(sync_key)
+            try:
+                signer.loads(
+                    signature,
+                    max_age=settings.SYNC_CHANGED_FILES_SIGNATURE_MAX_AGE)
+            except (SignatureExpired, BadSignature) as e:
+                return HttpResponseBadRequest(e.message)
+            sync_changed_files(
+                sync_key, settings.LAST_BOILERPLATE_COMMIT,
+                settings.SYNC_CHANGED_FILES_URL, settings.PROJECT_DIR)
+    return HttpResponse('ok')

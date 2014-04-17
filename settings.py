@@ -126,10 +126,14 @@ for app in [
 # while this container was being deployed (and the old one was still running
 # and receiving all the changes).
 ###############################################################################
+if 'CMSCLOUD_SYNC_KEY' not in locals():
+    CMSCLOUD_SYNC_KEY = None
+if 'LAST_BOILERPLATE_COMMIT' not in locals():
+    LAST_BOILERPLATE_COMMIT = None
+if 'SYNC_CHANGED_FILES_URL' not in locals():
+    SYNC_CHANGED_FILES_URL = None
 
-if ('CMSCLOUD_SYNC_KEY' in locals() and CMSCLOUD_SYNC_KEY and
-        'LAST_BOILERPLATE_COMMIT' in locals() and LAST_BOILERPLATE_COMMIT and
-        'SYNC_CHANGED_FILES_URL' in locals() and SYNC_CHANGED_FILES_URL):
+if (CMSCLOUD_SYNC_KEY and LAST_BOILERPLATE_COMMIT and SYNC_CHANGED_FILES_URL):
     sync_changed_files(
         CMSCLOUD_SYNC_KEY, LAST_BOILERPLATE_COMMIT, SYNC_CHANGED_FILES_URL,
         PROJECT_DIR)
