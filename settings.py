@@ -3,7 +3,6 @@ import json
 import os
 
 from base_settings import *  # NOQA
-from cmscloud.sync import sync_changed_files
 
 with open(os.path.join(os.path.dirname(__file__), 'settings.json')) as fobj:
     locals().update(json.load(fobj))
@@ -121,19 +120,9 @@ for app in [
 ]:
     INSTALLED_APPS.append(app)
 
-###############################################################################
-# Running the initial sync that should pull all the changes that have been made
-# while this container was being deployed (and the old one was still running
-# and receiving all the changes).
-###############################################################################
 if 'CMSCLOUD_SYNC_KEY' not in locals():
     CMSCLOUD_SYNC_KEY = None
 if 'LAST_BOILERPLATE_COMMIT' not in locals():
     LAST_BOILERPLATE_COMMIT = None
 if 'SYNC_CHANGED_FILES_URL' not in locals():
     SYNC_CHANGED_FILES_URL = None
-
-if (CMSCLOUD_SYNC_KEY and LAST_BOILERPLATE_COMMIT and SYNC_CHANGED_FILES_URL):
-    sync_changed_files(
-        CMSCLOUD_SYNC_KEY, LAST_BOILERPLATE_COMMIT, SYNC_CHANGED_FILES_URL,
-        PROJECT_DIR)

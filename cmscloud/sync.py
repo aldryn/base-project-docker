@@ -3,11 +3,13 @@ import fcntl
 import hashlib
 import hmac
 import os
+import sys
 import tarfile
 
 from django.core.files.temp import NamedTemporaryFile
 from django.utils.crypto import constant_time_compare
 from itsdangerous import URLSafeTimedSerializer
+from raven.contrib.django.models import get_client
 import requests
 
 
@@ -17,6 +19,22 @@ CHUNK_SIZE = 64 * 1024  # 64KB
 
 
 def sync_changed_files(sync_key, last_commit_hash, sync_url, project_dir):
+    try:
+        _sync_changed_files(sync_key, last_commit_hash, sync_url, project_dir)
+    except Exception:
+        import traceback
+        traceback.print_exc()
+        exc_info = sys.exc_info()
+        try:
+            raven_client = get_client()
+            raven_client.captureException(exc_info=exc_info)
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
+
+
+def _sync_changed_files(sync_key, last_commit_hash, sync_url, project_dir):
     if not os.path.exists(COMMIT_CACHE_FILEPATH):
         open(COMMIT_CACHE_FILEPATH, 'w').close()
     commit_cache_file = open(COMMIT_CACHE_FILEPATH, 'r+')
