@@ -20,6 +20,13 @@ from cmscloud.forms import AddForm, DeleteForm
 from cmscloud.sync import sync_changed_files
 
 
+def safe_get_module(*args):
+    try:
+        return get_module(*args)
+    except ImportError:
+        return None
+
+
 def check_uninstall_ok(request):
     apps = request.GET.get('apps', '').split(',')
     if apps == ['']:
@@ -28,24 +35,24 @@ def check_uninstall_ok(request):
     apphooks = []
     menus = []
     for app in apps:
-        module = get_module(app, "cms_plugins", False, False)
+        module = safe_get_module(app, "cms_plugins", False, False)
         if module:
             for cls_name in dir(module):
                 print cls_name
                 cls = getattr(module, cls_name)
                 if inspect.isclass(cls) and issubclass(cls, CMSPluginBase):
                     plugin_names.append(cls.__name__)
-        module = get_module(app, "cms_app", False, False)
+        module = safe_get_module(app, "cms_app", False, False)
         if module:
             for cls_name in dir(module):
                 cls = getattr(module, cls_name)
-                if inspect.isclass(cls) and issubclass(cls, CMSApp) and not cls.__name__ in apphooks:
+                if inspect.isclass(cls) and issubclass(cls, CMSApp) and cls.__name__ not in apphooks:
                     apphooks.append(cls.__name__)
-        module = get_module(app, "menu", False, False)
+        module = safe_get_module(app, "menu", False, False)
         if module:
             for cls_name in dir(module):
                 cls = getattr(module, cls_name)
-                if hasattr(cls, 'cms_enabled') and cls.cms_enabled and not cls.__name__ in menus:
+                if hasattr(cls, 'cms_enabled') and cls.cms_enabled and cls.__name__ not in menus:
                     menus.append(cls.__name__)
     plugin_count = {}
     for plugin_type in plugin_names:
