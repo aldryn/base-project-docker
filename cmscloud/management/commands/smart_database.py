@@ -56,9 +56,11 @@ class Command(NoArgsCommand):
             with commit_on_success():
                 MigrationHistory.objects.count()
         except DatabaseError:
-            self.stdout.write("No database yet, running full syncdb\n")
-            syncdb_opts['migrate_all'] = True
-            migrate_opts['fake'] = True
+            self.stdout.write("No database yet, but NOT running full syncdb anyway (because that causes problems with django-cms 3 cms plugin table renames).\n")
+            if False:
+                self.stdout.write("No database yet, running full syncdb\n")
+                syncdb_opts['migrate_all'] = True
+                migrate_opts['fake'] = True
         syncdb = SyncDB()
         syncdb.stdout = self.stdout
         syncdb.stderr = self.stderr
