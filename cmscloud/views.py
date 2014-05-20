@@ -11,13 +11,17 @@ from cms.plugin_base import CMSPluginBase
 from cms.utils.django_load import get_module
 from django.conf import settings
 from django.forms.forms import NON_FIELD_ERRORS
-from django.http import HttpResponse, HttpResponseBadRequest, Http404
+from django.http import (
+    HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, Http404)
 from django.template.loader import render_to_string
 from django.views.generic import View
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 
 from cmscloud.forms import AddForm, DeleteForm
 from cmscloud.sync import sync_changed_files
+
+LIVERELOAD_ACTIVE_SESSION_KEY = '_livereload_active'
+LIVERELOAD_ACTIVE_DEFAULT = True
 
 
 def safe_get_module(*args):
@@ -128,17 +132,26 @@ class Delete(Add):
             os.remove(full_path)
 
 
+def toggle_livereload(request):
+    livereload_active = request.session.get(
+        LIVERELOAD_ACTIVE_SESSION_KEY, LIVERELOAD_ACTIVE_DEFAULT)
+    request.session[LIVERELOAD_ACTIVE_SESSION_KEY] = not livereload_active
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
 def get_livereload_iframe_content(request):
     CONTENT = ''
     if request.user.is_authenticated():
-        live_reload_credential_url = getattr(
+        livereload_active = request.session.get(
+            LIVERELOAD_ACTIVE_SESSION_KEY, LIVERELOAD_ACTIVE_DEFAULT)
+        livereload_credential_url = getattr(
             settings, 'LIVERELOAD_CREDENTIAL_URL', None)
-        if live_reload_credential_url:
+        if livereload_active and livereload_credential_url:
             CONTENT = render_to_string(
                 'cmscloud/livereload_iframe_content.html',
                 {
                     'CMSCLOUD_STATIC_URL': settings.CMSCLOUD_STATIC_URL,
-                    'LIVE_RELOAD_CREDENTIAL_URL': live_reload_credential_url,
+                    'LIVE_RELOAD_CREDENTIAL_URL': livereload_credential_url,
                     'CURRENTLY_LOGGED_IN_USER_EMAIL': request.user.email
                 })
     return HttpResponse(CONTENT)
