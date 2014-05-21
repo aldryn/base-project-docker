@@ -39,6 +39,7 @@ def _sync_changed_files(sync_key, last_commit_hash, sync_url, project_dir):
         open(COMMIT_CACHE_FILEPATH, 'w').close()
     commit_cache_file = open(COMMIT_CACHE_FILEPATH, 'r+')
     fd = commit_cache_file.fileno()
+    temp_file = None
     try:
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except IOError as e:
@@ -85,4 +86,5 @@ def _sync_changed_files(sync_key, last_commit_hash, sync_url, project_dir):
             response.raise_for_status()
     finally:
         commit_cache_file.close()
-        temp_file.close()
+        if temp_file:
+            temp_file.close()
