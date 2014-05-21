@@ -13,4 +13,5 @@ class LiveReloadToggleButton(CMSToolbar):
         if hasattr(settings, 'LIVERELOAD_CREDENTIAL_URL'):
             url = reverse('toggle-livereload')
             active = self.request.session.get(LIVERELOAD_ACTIVE_SESSION_KEY, LIVERELOAD_ACTIVE_DEFAULT)
-            self.toolbar.add_button('Live Reload', url, active=active, side=self.toolbar.RIGHT)
+            title = 'Live Reload is ON' if active else 'Live Reload is OFF'
+            self.toolbar.add_button(title, url, active=active, side=self.toolbar.RIGHT)
