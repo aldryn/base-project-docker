@@ -18,7 +18,7 @@ class AccessControlMiddleware(object):
             # the user is already logged in
             return None
         if request.path.startswith(('/login/', '/admin/~cmscloud-api/',
-                                    '/trigger-sync-changed-files/')):
+                                    '/trigger-sync-changed-files/', '/sitemap.xml')):
             # internal api call, skipping the authentication check
             return None
         if request.session.get(settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME):

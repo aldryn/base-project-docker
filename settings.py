@@ -44,12 +44,12 @@ THUMBNAIL_SOURCE_GENERATORS = (
 )
 FILER_IMAGE_USE_ICON = True
 for app in ['filer', 'easy_thumbnails', 'mptt', 'polymorphic', 'cmsplugin_filer_file', 'cmsplugin_filer_image']:
-    if not app in INSTALLED_APPS:
+    if app not in INSTALLED_APPS:
         INSTALLED_APPS.append(app)
 # end filer
 
 # extra INSTALLED_APPS
-extra_installed_apps = [
+EXTRA_INSTALLED_APPS = [
     'reversion',
     # TODO: remove all plugins from here. they should be addons
     'djangocms_text_ckeditor',
@@ -59,9 +59,10 @@ extra_installed_apps = [
     # 'cms.plugins.file',  # now using django-filer
     'djangocms_snippet',  # 'cms.plugins.snippet',
     'djangocms_googlemap',  # 'cms.plugins.googlemap',
+    'django.contrib.sitemaps',
 ]
-for app in extra_installed_apps:
-    if not app in INSTALLED_APPS:
+for app in EXTRA_INSTALLED_APPS:
+    if app not in INSTALLED_APPS:
         INSTALLED_APPS.append(app)
 
 
@@ -70,7 +71,7 @@ EXTRA_MIDDLEWARE_CLASSES = [
     'cmscloud.middleware.CurrentSiteMiddleware',
     'cmscloud.middleware.AldrynUserMiddleware']
 for middleware in EXTRA_MIDDLEWARE_CLASSES:
-    if not middleware in MIDDLEWARE_CLASSES:
+    if middleware not in MIDDLEWARE_CLASSES:
         MIDDLEWARE_CLASSES.append(middleware)
 
 
