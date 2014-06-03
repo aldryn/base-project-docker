@@ -60,6 +60,6 @@ lxml==3.3.3
 BeautifulSoup==3.2.1
 # TODO: remove django-filer stuff from here. It should be an addon.
 django-filer==0.9.5
-cmsplugin-filer==0.9.5
+cmsplugin-filer==0.9.7
 django-polymorphic==0.5.3
 easy-thumbnails==1.4
