@@ -62,3 +62,6 @@ django-filer==0.9.6
 cmsplugin-filer==0.9.9
 django-polymorphic==0.5.5
 easy-thumbnails==2.0.1
+# not required by the base project, but addons depend on them and might have installed older versions that stick
+# around due to virtualenv caching
+django-hvad>=0.4.1
