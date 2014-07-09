@@ -1,7 +1,6 @@
 --index-url https://devpi.us-iad-rs.aldryn.net/aldryn/dev/
---extra-index-url http://pkg:S5Zs5h5Z@pkg.djeese.com/simple/
 --extra-index-url https://devpi.divio.ch/django-cms/pre-release/+simple/
---extra-index-url=https://devpi.divio.ch/divio/all/+simple/
+--extra-index-url https://devpi.divio.ch/divio/all/+simple/
 --extra-index-url https://divio:wlkdjeorijlerf@pkg.divio.ch/simple/
 -r generated_requirements.txt
 
