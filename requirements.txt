@@ -8,7 +8,7 @@ Django==1.6.5
 Pillow==2.5.0
 PyYAML==3.11
 South==1.0
-Twisted==12.0.0
+Twisted==15.0.0
 argh==0.25.0
 argparse==1.2.1
 certifi==14.05.14
@@ -49,10 +49,10 @@ raven==5.0.0
 redis==2.10.1
 requests==2.3.0
 six==1.7.3
-watchdog==0.6.0
+watchdog==0.8.0
 webservices==0.4
 wsgiref==0.1.2
-zope.interface==3.8.0
+zope.interface==4.1.1
 # TODO: remove django-compressor from here. It should be an addon and a "boilerplate-dependency"
 django_compressor==1.4
 lxml==3.3.5
