@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import dj_database_url
+from getenv import env
 
 from base_settings import *  # NOQA
 
 with open(os.path.join(os.path.dirname(__file__), 'settings.json')) as fobj:
     locals().update(json.load(fobj))
+
+if env('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
 # all strings are unicode after loading from json. But some settings MUST BE STRINGS
 if isinstance(locals().get('EMAIL_HOST_PASSWORD', None), unicode):
