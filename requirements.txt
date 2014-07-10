@@ -4,7 +4,7 @@
 --extra-index-url https://divio:wlkdjeorijlerf@pkg.divio.ch/simple/
 -r generated_requirements.txt
 
-Django==1.6.5
+Django==1.5.8
 Pillow==2.5.0
 PyYAML==3.11
 South==1.0
