@@ -67,3 +67,4 @@ easy-thumbnails==2.0.1
 # not required by the base project, but addons depend on them and might have installed older versions that stick
 # around due to virtualenv caching
 django-hvad>=0.4.1
+aldryn-common>=0.0.4
