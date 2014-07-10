@@ -10,7 +10,10 @@ with open(os.path.join(os.path.dirname(__file__), 'settings.json')) as fobj:
     locals().update(json.load(fobj))
 
 if env('DATABASE_URL'):
+    if 'DATABASES' not in locals():
+        DATABASES = {}
     DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+
 
 # all strings are unicode after loading from json. But some settings MUST BE STRINGS
 if isinstance(locals().get('EMAIL_HOST_PASSWORD', None), unicode):
@@ -23,7 +26,7 @@ with open(os.path.join(os.path.dirname(__file__), 'cms_templates.json')) as fobj
     locals()['CMS_TEMPLATES'] = json.load(fobj)
 
 
-if 'DATABASES' not in locals():
+if 'DATABASES' not in locals() or 'DATABASES' in locals() and 'default' not in DATABASES:
     localname = os.environ.get("LOCAL_DATABASE_NAME", ":memory:")
     print "USING IN %s SQLITE3" % localname
     print "NO DATABASE CONFIGURED!!! USING %s SQLITE3 DATABASE!!!"
