@@ -8,12 +8,8 @@ dotenv.read_dotenv()
 try:
     dotenv.read_dotenv('.env')
 except:
-    print "FAIL"
+    pass
 
-try:
-    dotenv.read_dotenv('../.env')
-except:
-    print "FAIL"
 
 if __name__ == "__main__":
     os.environ['DJANGO_SETTINGS_MODULE'] = env('DJANGO_SETTINGS_MODULE', 'settings')
