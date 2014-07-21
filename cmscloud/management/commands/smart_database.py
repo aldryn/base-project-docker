@@ -79,5 +79,6 @@ class Command(NoArgsCommand):
         else:
             self.stdout.write("data.yaml not found, not loading any data.\n")
         if idle:
+            self.stdout.write("running dummy http server for unknown reasons.\n")
             dummy_http()
 
