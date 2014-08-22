@@ -5,8 +5,8 @@
 -r generated_requirements.txt
 
 # Django: many apps don't support Django 1.6 yet :-(
-Django==1.5.8
-Pillow==2.5.0
+Django==1.5.9
+Pillow==2.5.3
 PyYAML==3.11
 South==1.0
 Twisted==14.0.0
@@ -27,15 +27,15 @@ django-reversion==1.8.0  # rq.filter: <=1.8.0
 django-sekizai==0.7
 django-simple-sso==0.9.3
 djangocms-admin-style==0.2.2
-djangocms-text-ckeditor==2.1.6
-djangocms-link==1.3.5
+djangocms-text-ckeditor==2.2.0
+djangocms-link==1.4.0
 Django-Select2==4.2.2
-djangocms-snippet==1.0.2
-djangocms-googlemap==0.0.5
+djangocms-snippet==1.1
+djangocms-googlemap==0.1.0
 dj-email-url==0.0.2
 dj-database-url==0.3.0
 dj-redis-url==0.1.4
-dj-static==0.0.5
+dj-static==0.0.6
 aldryn-snake==0.0.2
 djeesefs==0.1.13
 docopt==0.6.2
@@ -50,10 +50,10 @@ itsdangerous==0.24
 pathtools==0.1.2
 psycopg2==2.5.3
 raven==5.0.0
-redis==2.10.1
+redis==2.10.3
 requests==2.3.0
 six==1.7.3
-watchdog==0.8.0
+watchdog==0.8.1
 webservices==0.4
 wsgiref==0.1.2
 zope.interface==4.1.1
@@ -62,7 +62,7 @@ django_compressor==1.4
 lxml==3.3.5
 BeautifulSoup==3.2.1
 # TODO: remove django-filer stuff from here. It should be an addon.
-django-filer==0.9.6
+django-filer==0.9.7
 cmsplugin-filer==0.9.9
 django-polymorphic==0.5.5
 easy-thumbnails==2.0.1
