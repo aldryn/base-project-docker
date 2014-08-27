@@ -50,7 +50,7 @@ djangocms-admin-style==0.2.2
 djangocms-googlemap==0.1.0
 djangocms-link==1.4.0
 djangocms-snippet==1.1
-djangocms-text-ckeditor==2.2.0
+djangocms-text-ckeditor==2.3.0
 djeesefs==0.1.13
 docopt==0.6.2
 easy-thumbnails==2.0.1
