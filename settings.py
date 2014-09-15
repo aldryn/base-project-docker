@@ -24,11 +24,17 @@ if env('DATABASE_URL'):
 if isinstance(locals().get('EMAIL_HOST_PASSWORD', None), unicode):
     EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD.encode('ascii')
 
+if 'CMS_LANGUAGES' in locals():
+    CMS_LANGUAGES = {int(key) if isinstance(key, basestring) and key.isdigit() else key: value for key, value in CMS_LANGUAGES.items()}
 
-CMS_LANGUAGES = {int(key) if isinstance(key, basestring) and key.isdigit() else key: value for key, value in CMS_LANGUAGES.items()}
 
-with open(os.path.join(os.path.dirname(__file__), 'cms_templates.json')) as fobj:
-    locals()['CMS_TEMPLATES'] = json.load(fobj)
+templates_json_filename = os.path.join(os.path.dirname(__file__), 'cms_templates.json')
+if os.path.exists(templates_json_filename):
+    with open(templates_json_filename) as fobj:
+        try:
+            locals()['CMS_TEMPLATES'] = json.load(fobj)
+        except ValueError as e:
+            print e
 
 
 if 'DATABASES' not in locals() or 'DATABASES' in locals() and 'default' not in DATABASES:
