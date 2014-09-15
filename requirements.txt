@@ -21,7 +21,7 @@ argparse==1.2.1
 certifi==14.05.14
 chardet==2.2.1
 cmscloud-client==0.5.3
-cmsplugin-filer==0.9.9
+cmsplugin-filer==0.10
 dj-database-url==0.3.0
 dj-email-url==0.0.2
 dj-redis-url==0.1.4
@@ -48,12 +48,12 @@ django-sekizai==0.7
 django-simple-sso==0.9.3
 djangocms-admin-style==0.2.2
 djangocms-googlemap==0.1.0
-djangocms-link==1.4.0
+djangocms-link==1.4.1
 djangocms-snippet==1.1
 djangocms-text-ckeditor==2.3.0
 djeesefs==0.1.13
 docopt==0.6.2
-easy-thumbnails==2.0.1
+easy-thumbnails==2.1
 gevent==1.0.1
 greenlet==0.4.2
 # gunicorn 19.0 is failing with --prefork
@@ -61,18 +61,18 @@ gunicorn==18.0  # rq.filter: !=19.0
 hiredis==0.1.4
 html5lib==1.0b3
 itsdangerous==0.24
-lxml==3.3.5
+lxml==3.4.0
 pathtools==0.1.2
 psycogreen==1.0
-psycopg2==2.5.3
+psycopg2==2.5.4
 pystache==0.5.4
 raven==5.0.0
 redis==2.10.3
-requests==2.3.0
-six==1.7.3
+requests==2.4.1
+six==1.8.0
 static==1.0.2
 static3==0.5.1
 watchdog==0.8.1
-webservices==0.4
+webservices==0.5
 wsgiref==0.1.2
 zope.interface==4.1.1
