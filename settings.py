@@ -6,8 +6,13 @@ from getenv import env
 
 from base_settings import *  # NOQA
 
-with open(os.path.join(os.path.dirname(__file__), 'settings.json')) as fobj:
-    locals().update(json.load(fobj))
+settings_json_filename = os.path.join(os.path.dirname(__file__), 'settings.json')
+if os.path.exists(settings_json_filename):
+    with open(settings_json_filename) as fobj:
+        try:
+            locals().update(json.load(fobj))
+        except ValueError as e:
+            print e
 
 if env('DATABASE_URL'):
     if 'DATABASES' not in locals():
