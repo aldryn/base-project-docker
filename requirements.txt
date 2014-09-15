@@ -1,4 +1,6 @@
---index-url https://devpi.us-iad-rs.aldryn.net/aldryn/dev/
+# CAN'T USE the devpi server here, because there are binary mismatches with the different base systems in the wheels
+# we need to have an index per base image type for the wheels.
+# --index-url https://devpi.us-iad-rs.aldryn.net/aldryn/dev/
 --extra-index-url https://devpi.divio.ch/django-cms/pre-release/+simple/
 --extra-index-url https://devpi.divio.ch/divio/all/+simple/
 --extra-index-url https://divio:wlkdjeorijlerf@pkg.divio.ch/simple/
