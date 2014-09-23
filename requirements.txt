@@ -28,6 +28,7 @@ dj-database-url==0.3.0
 dj-email-url==0.0.2
 dj-redis-url==0.1.4
 dj-static==0.0.6
+django_cache_url==0.8.0
 django-appconf==0.6
 django-classy-tags==0.5.1
 django-cms==3.0.5

@@ -2,6 +2,7 @@
 import json
 import os
 import dj_database_url
+import django_cache_url
 from getenv import env
 
 from base_settings import *  # NOQA
@@ -23,6 +24,12 @@ if env('DATABASE_URL'):
 # all strings are unicode after loading from json. But some settings MUST BE STRINGS
 if isinstance(locals().get('EMAIL_HOST_PASSWORD', None), unicode):
     EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD.encode('ascii')
+
+cache_url = env('CACHE_URL', locals().get('CACHE_URL', None))
+if cache_url is not None:
+    if 'CACHES' not in locals():
+        CACHES = {}
+    CACHES['default'] = django_cache_url.parse(cache_url)
 
 if 'CMS_LANGUAGES' in locals():
     CMS_LANGUAGES = {int(key) if isinstance(key, basestring) and key.isdigit() else key: value for key, value in CMS_LANGUAGES.items()}

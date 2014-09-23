@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from copy import deepcopy
 import os
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import NoArgsCommand, CommandError
 from django.conf import settings
 from django.db.transaction import commit_on_success
 from django.db.utils import DatabaseError
@@ -9,6 +9,7 @@ from django.utils.translation import activate
 from optparse import make_option
 from south.management.commands.migrate import Command as Migrate
 from south.management.commands.syncdb import Command as SyncDB
+from django.core.management.commands.createcachetable import Command as CreateCacheTable
 from south.models import MigrationHistory
 from cmscloud.serialize import Loader
 
@@ -69,6 +70,14 @@ class Command(NoArgsCommand):
         migrate.stdout = self.stdout
         migrate.stderr = self.stderr
         migrate.handle(**migrate_opts)
+        try:
+            cachetable = CreateCacheTable()
+            cachetable.stdout = self.stdout
+            cachetable.stderr = self.stderr
+            cachetable.handle('django_dbcache', database='default')
+            self.stdout.write('created cache table "django_dbcache"')
+        except CommandError:
+            self.stdout.write('not created cache table "django_dbcache". already exists.')
         datayaml = os.path.join(settings.PROJECT_DIR, 'data.yaml')
         if os.path.exists(datayaml):
             self.stdout.write("Found data.yaml, trying to load.\n")
