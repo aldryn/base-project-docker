@@ -52,6 +52,16 @@ class Command(NoArgsCommand):
         migrate_opts = deepcopy(options)
         migrate_opts['fake'] = False
         migrate_opts['interactive'] = False
+
+        try:
+            cachetable = CreateCacheTable()
+            cachetable.stdout = self.stdout
+            cachetable.stderr = self.stderr
+            cachetable.handle('django_dbcache', database='default')
+            self.stdout.write('created cache table "django_dbcache"')
+        except CommandError:
+            self.stdout.write('not created cache table "django_dbcache". already exists.')
+
         self.stdout.write("Detecting database status\n")
         try:
             with commit_on_success():
@@ -70,14 +80,6 @@ class Command(NoArgsCommand):
         migrate.stdout = self.stdout
         migrate.stderr = self.stderr
         migrate.handle(**migrate_opts)
-        try:
-            cachetable = CreateCacheTable()
-            cachetable.stdout = self.stdout
-            cachetable.stderr = self.stderr
-            cachetable.handle('django_dbcache', database='default')
-            self.stdout.write('created cache table "django_dbcache"')
-        except CommandError:
-            self.stdout.write('not created cache table "django_dbcache". already exists.')
         datayaml = os.path.join(settings.PROJECT_DIR, 'data.yaml')
         if os.path.exists(datayaml):
             self.stdout.write("Found data.yaml, trying to load.\n")
