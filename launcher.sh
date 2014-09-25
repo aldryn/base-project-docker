@@ -1,2 +1,7 @@
 #!/bin/bash
-gunicorn wsgi:application -b 0.0.0.0:$PORT  -w 2 --max-requests 1000 --graceful-timeout 120 --preload --worker-class gevent --config gunicorncfg.py --access-logfile - --error-logfile - --log-level info
+if [ $PAGESPEED ]; then
+  cp /etc/nginx/nginx-pagespeed.conf /etc/nginx/nginx.conf
+else
+  cp /etc/nginx/nginx-no-pagespeed.conf /etc/nginx/nginx.conf
+fi
+supervisord -c /etc/supervisor/supervisord.conf --nodaemon
