@@ -74,6 +74,11 @@ for app in ['filer', 'easy_thumbnails', 'mptt', 'polymorphic', 'cmsplugin_filer_
         INSTALLED_APPS.append(app)
 # end filer
 
+
+# Compress is not working well with multiple docker containers that don't have a shared filesystem.
+COMPRESS_ENABLED = env('COMPRESS_ENABLED', False)
+
+
 # extra INSTALLED_APPS
 EXTRA_INSTALLED_APPS = [
     'reversion',
