@@ -9,4 +9,5 @@ else
   cp /etc/nginx/nginx-no-pagespeed.conf /etc/nginx/nginx.conf
 fi
 /bin/sed -i "s/DOMAIN/${DOMAIN}/" /etc/nginx/nginx.conf
+/app/crawler.sh &
 exec supervisord -c /etc/supervisor/supervisord.conf --nodaemon

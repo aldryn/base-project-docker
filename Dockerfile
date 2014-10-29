@@ -2,7 +2,9 @@ FROM aldryn/base:2.1
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
-RUN apt-get -y install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip wget supervisor
+RUN apt-get -y install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip wget supervisor npm
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN npm install -g crawl
 WORKDIR /tmp
 ENV NPS_VERSION 1.9.32.1
 RUN wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.zip
