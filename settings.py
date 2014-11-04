@@ -72,6 +72,8 @@ FILER_IMAGE_USE_ICON = True
 for app in ['filer', 'easy_thumbnails', 'mptt', 'polymorphic', 'cmsplugin_filer_file', 'cmsplugin_filer_image']:
     if app not in INSTALLED_APPS:
         INSTALLED_APPS.append(app)
+FILER_DEBUG = True
+FILER_ENABLE_LOGGING = True
 # end filer
 
 
