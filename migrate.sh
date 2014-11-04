@@ -4,4 +4,7 @@ set -x  # echo on
 # because it will return an error code if the table already exists and that would make the whole script fail
 python manage.py createcachetable django_dbcache
 python manage.py syncdb --noinput
-python manage.py migrate
+python manage.py migrate --list --noinput
+python manage.py migrate --noinput
+python manage.py migrate --list --noinput
+
