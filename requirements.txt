@@ -43,6 +43,7 @@ django-health-check==1.0
 # around due to virtualenv caching
 django-hvad>=0.4.1
 django-mptt==0.6.1
+django_parler==1.2.1
 django-polymorphic==0.6.1
 django-redis-cache==0.13.0
 # django-reverion 1.8.1 does not work with Django 1.5.8 (transaction.atomic)
