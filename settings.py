@@ -85,6 +85,7 @@ COMPRESS_ENABLED = env('COMPRESS_ENABLED', False)
 EXTRA_INSTALLED_APPS = [
     'reversion',
     'parler',
+    'hvad',
     # TODO: remove all plugins from here. they should be addons
     'djangocms_text_ckeditor',
     # 'cms.plugins.picture',  # now using django-filer
