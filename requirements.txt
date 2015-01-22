@@ -15,8 +15,7 @@ PyYAML==3.11
 YURL==0.13
 South==1.0.2
 Twisted==14.0.2
-# not required by the base project, but addons depend on them and might have installed older versions that stick
-# around due to virtualenv caching
+aldryn-boilerplates==0.3
 aldryn-common>=0.0.4
 aldryn-sites==0.4
 aldryn-snake==0.0.2

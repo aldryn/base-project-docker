@@ -95,6 +95,7 @@ COMPRESS_ENABLED = env('COMPRESS_ENABLED', False)
 # extra INSTALLED_APPS
 EXTRA_INSTALLED_APPS = [
     'aldryn_sites',
+    'aldryn_boilerplates',
     'reversion',
     'parler',
     'hvad',
@@ -117,12 +118,38 @@ for app in EXTRA_INSTALLED_APPS:
 # extra MIDDLEWARE_CLASSES
 EXTRA_MIDDLEWARE_CLASSES = [
     'cmscloud.middleware.CurrentSiteMiddleware',
-    'cmscloud.middleware.AldrynUserMiddleware']
+    'cmscloud.middleware.AldrynUserMiddleware',
+]
 for middleware in EXTRA_MIDDLEWARE_CLASSES:
     if middleware not in MIDDLEWARE_CLASSES:
         MIDDLEWARE_CLASSES.append(middleware)
 # aldryn-sites middleware should be near the top
 MIDDLEWARE_CLASSES.insert(0, 'aldryn_sites.middleware.SiteMiddleware')
+
+
+# extra CONTEXT_PROCESSORS
+EXTRA_CONTEXT_PROCESSORS = [
+    'aldryn_boilerplates.context_processors.boilerplate',
+]
+for context_processor in EXTRA_CONTEXT_PROCESSORS:
+    if context_processor not in CONTEXT_PROCESSORS:
+        CONTEXT_PROCESSORS.append(context_processor)
+
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    # important! place right before django.contrib.staticfiles.finders.AppDirectoriesFinder
+    'aldryn_boilerplates.staticfile_finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+TEMPLATE_LOADERS = [
+    'django.template.loaders.filesystem.Loader',
+    # important! place right before django.template.loaders.app_directories.Loader
+    'aldryn_boilerplates.template_loaders.AppDirectoriesLoader',
+    'django.template.loaders.app_directories.Loader',
+]
+
 
 
 # TODO: move this to ckeditor addon aldyn config when we extract it from the base project
