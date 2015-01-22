@@ -20,6 +20,17 @@ if env('DATABASE_URL'):
         DATABASES = {}
     DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
+DOMAIN = env('DOMAIN', locals().get('DOMAIN', None))
+DOMAIN_ALIASES = env('DOMAIN_ALIASES', locals().get('DOMAIN_ALIASES', ''))
+DOMAIN_REDIRECTS = env('DOMAIN_REDIRECTS', locals().get('DOMAIN_REDIRECTS', ''))
+if DOMAIN:
+    ALDRYN_SITES_DOMAINS = {
+        1: {
+            'domain': DOMAIN,
+            'aliases': [d.strip() for d in DOMAIN_ALIASES.split(',') if d.strip()],
+            'redirects': [d.strip() for d in DOMAIN_REDIRECTS.split(',') if d.strip()]
+        }
+    }
 
 # all strings are unicode after loading from json. But some settings MUST BE STRINGS
 if isinstance(locals().get('EMAIL_HOST_PASSWORD', None), unicode):
@@ -83,7 +94,11 @@ COMPRESS_ENABLED = env('COMPRESS_ENABLED', False)
 
 # extra INSTALLED_APPS
 EXTRA_INSTALLED_APPS = [
+    'aldryn_sites',
     'reversion',
+    'parler',
+    'hvad',
+    'robots',
     # TODO: remove all plugins from here. they should be addons
     'djangocms_text_ckeditor',
     # 'cms.plugins.picture',  # now using django-filer
@@ -106,6 +121,8 @@ EXTRA_MIDDLEWARE_CLASSES = [
 for middleware in EXTRA_MIDDLEWARE_CLASSES:
     if middleware not in MIDDLEWARE_CLASSES:
         MIDDLEWARE_CLASSES.append(middleware)
+# aldryn-sites middleware should be near the top
+MIDDLEWARE_CLASSES.insert(0, 'aldryn_sites.middleware.SiteMiddleware')
 
 
 # TODO: move this to ckeditor addon aldyn config when we extract it from the base project

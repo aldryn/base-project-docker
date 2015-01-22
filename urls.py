@@ -20,6 +20,7 @@ client = CloudUserClient.from_dsn(settings.SSO_DSN)
 urlpatterns = patterns(
     '',
     url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'cmspages': CMSSitemap}}),
+    url(r'^robots\.txt$', include('robots.urls')),
     url(r'^%s(?P<path>.*)$' % re.escape(settings.STATIC_URL.lstrip('/')), 'django.contrib.staticfiles.views.serve', {'insecure': True}),
     url(r'^admin/~cmscloud-api/', include('cmscloud.urls')),
     url(r'^admin/~health-check/', include('health_check.urls')),

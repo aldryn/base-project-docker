@@ -1,4 +1,4 @@
-FROM aldryn/base:2.1
+FROM aldryn/base:2.2
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
@@ -27,11 +27,11 @@ RUN rm -rf /tmp/*
 ADD nginx /etc/nginx/
 ADD supervisord.conf /etc/supervisor/supervisord.conf
 
-RUN mkdir /app
+RUN mkdir -p /app
 WORKDIR /app
 ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
 RUN pip install --use-wheel -r requirements.txt
 ADD . /app/
 EXPOSE 80
-CMD ["/app/launcher.sh"]
+CMD start web
