@@ -98,6 +98,7 @@ EXTRA_INSTALLED_APPS = [
     'reversion',
     'parler',
     'hvad',
+    'robots',
     # TODO: remove all plugins from here. they should be addons
     'djangocms_text_ckeditor',
     # 'cms.plugins.picture',  # now using django-filer
@@ -120,9 +121,9 @@ EXTRA_MIDDLEWARE_CLASSES = [
 for middleware in EXTRA_MIDDLEWARE_CLASSES:
     if middleware not in MIDDLEWARE_CLASSES:
         MIDDLEWARE_CLASSES.append(middleware)
-
 # aldryn-sites middleware should be near the top
 MIDDLEWARE_CLASSES.insert(0, 'aldryn_sites.middleware.SiteMiddleware')
+
 
 # TODO: move this to ckeditor addon aldyn config when we extract it from the base project
 # boilerplate should provide /static/js/modules/ckeditor.wysiwyg.js and /static/css/base.css
