@@ -3,7 +3,7 @@
 # --index-url https://devpi.us-iad-rs.aldryn.net/aldryn/dev/
 --extra-index-url https://devpi.divio.ch/django-cms/pre-release/+simple/
 --extra-index-url https://devpi.divio.ch/divio/all/+simple/
---extra-index-url https://pkg.divio.ch/simple/
+--extra-index-url https://divio:wlkdjeorijlerf@pkg.divio.ch/simple/
 -r generated_requirements.txt
 
 BeautifulSoup==3.2.1
