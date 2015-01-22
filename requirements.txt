@@ -7,7 +7,7 @@
 -r generated_requirements.txt
 
 BeautifulSoup==3.2.1
-# Django: many apps don't support Django 1.6 yet :-(
+# Django: many apps don't support Django 1.7 yet :-(
 Django==1.6.10   # rq.filter: <1.7
 Django-Select2==4.2.2
 Pillow==2.7.0
