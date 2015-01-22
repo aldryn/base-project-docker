@@ -127,13 +127,13 @@ for middleware in EXTRA_MIDDLEWARE_CLASSES:
 MIDDLEWARE_CLASSES.insert(0, 'aldryn_sites.middleware.SiteMiddleware')
 
 
-# extra CONTEXT_PROCESSORS
-EXTRA_CONTEXT_PROCESSORS = [
+# extra TEMPLATE_CONTEXT_PROCESSORS
+EXTRA_TEMPLATE_CONTEXT_PROCESSORS = [
     'aldryn_boilerplates.context_processors.boilerplate',
 ]
-for context_processor in EXTRA_CONTEXT_PROCESSORS:
-    if context_processor not in CONTEXT_PROCESSORS:
-        CONTEXT_PROCESSORS.append(context_processor)
+for context_processor in EXTRA_TEMPLATE_CONTEXT_PROCESSORS:
+    if context_processor not in TEMPLATE_CONTEXT_PROCESSORS:
+        TEMPLATE_CONTEXT_PROCESSORS.append(context_processor)
 
 
 STATICFILES_FINDERS = [
