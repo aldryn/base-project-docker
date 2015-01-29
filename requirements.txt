@@ -1,4 +1,11 @@
+# Extra indexes currently necessary, because some (older) Addons have
+# dependencies to packages not yet on pypi.
+--extra-index-url https://devpi.divio.ch/django-cms/pre-release/+simple/
+--extra-index-url https://devpi.divio.ch/divio/all/+simple/
+--extra-index-url https://divio:wlkdjeorijlerf@pkg.divio.ch/simple/
+
 -r generated_requirements.txt
+
 BeautifulSoup==3.2.1
 # Django: many apps don't support Django 1.7 yet :-(
 Django==1.6.10   # rq.filter: <1.7
