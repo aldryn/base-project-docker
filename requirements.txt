@@ -15,7 +15,7 @@ PyYAML==3.11
 YURL==0.13
 South==1.0.2
 Twisted==14.0.2
-aldryn-boilerplates==0.5
+aldryn-boilerplates==0.6
 aldryn-common>=0.0.4
 aldryn-sites==0.5
 aldryn-snake==0.0.2
