@@ -1,9 +1,5 @@
-FROM aldryn/base:2.2
+FROM aldryn/base:2.3
 
-RUN apt-get -y update
-RUN apt-get -y upgrade
-RUN apt-get -y install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip wget supervisor npm
-RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN npm install -g crawl
 WORKDIR /tmp
 ENV NPS_VERSION 1.9.32.1
@@ -22,7 +18,6 @@ RUN cd nginx-${NGINX_VERSION} && \
                 --add-module=/tmp/ngx_pagespeed-release-${NPS_VERSION}-beta && \
     make && \
     make install
-RUN apt-get clean all
 RUN rm -rf /tmp/*
 ADD nginx /etc/nginx/
 ADD supervisord.conf /etc/supervisor/supervisord.conf
