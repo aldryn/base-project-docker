@@ -24,6 +24,7 @@ ADD supervisord.conf /etc/supervisor/supervisord.conf
 
 RUN mkdir -p /app
 WORKDIR /app
+ENV PIP_PRE 1
 ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
 RUN pip install --use-wheel -r requirements.txt
