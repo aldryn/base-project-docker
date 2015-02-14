@@ -156,8 +156,6 @@ TEMPLATE_LOADERS = [
 # boilerplate should provide /static/js/modules/ckeditor.wysiwyg.js and /static/css/base.css
 CKEDITOR_SETTINGS = {
     'height': 300,
-    'stylesSet': 'default:/static/js/modules/ckeditor.wysiwyg.js',
-    'contentsCss': ['/static/css/base.css'],
     'language': '{{ language }}',
     'toolbar': 'CMS',
     'skin': 'moono',
@@ -178,6 +176,13 @@ CKEDITOR_SETTINGS = {
         ['Link', 'Unlink', 'Anchor'],
     ],
 }
+boilerplate_name = locals().get('ALDRYN_BOILERPLATE_NAME', 'legacy')
+if boilerplate_name == 'bootstrap3':
+    CKEDITOR_SETTINGS['stylesSet'] = 'default:/static/js/addons/ckeditor.wysiwyg.js'
+    CKEDITOR_SETTINGS['contentsCss'] = ['/static/css/base.css']
+else:
+    CKEDITOR_SETTINGS['stylesSet'] = 'default:/static/js/modules/ckeditor.wysiwyg.js'
+    CKEDITOR_SETTINGS['contentsCss'] = ['/static/css/base.css']
 
 
 # OPTIONAL REDIS
