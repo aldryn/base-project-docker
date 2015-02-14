@@ -25,6 +25,10 @@ ADD supervisord.conf /etc/supervisor/supervisord.conf
 RUN mkdir -p /app
 WORKDIR /app
 ENV PIP_PRE 1
+
+# support pip installing stuff from servers using TLS with SNI
+RUN pip install pyOpenSSL ndg-httpsclient pyasn1
+
 ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
 RUN pip install --use-wheel -r requirements.txt
