@@ -27,7 +27,7 @@ WORKDIR /app
 ENV PIP_PRE 1
 
 # support pip installing stuff from servers using TLS with SNI
-RUN pip install pyOpenSSL ndg-httpsclient pyasn1
+RUN pip install pyOpenSSL==0.14 ndg-httpsclient==0.3.3 pyasn1==0.1.7 cryptography==0.7.2
 
 ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
