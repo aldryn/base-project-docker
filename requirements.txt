@@ -63,7 +63,7 @@ gunicorn==18.0  # rq.filter: !=19.0
 hiredis==0.1.5
 html5lib==1.0b3
 itsdangerous==0.24
-lxml==3.4.1
+lxml==3.4.2
 pathtools==0.1.2
 psycogreen==1.0
 psycopg2==2.5.4
