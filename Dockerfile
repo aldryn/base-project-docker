@@ -22,6 +22,13 @@ RUN rm -rf /tmp/*
 ADD nginx /etc/nginx/
 ADD supervisord.conf /etc/supervisor/supervisord.conf
 
+WORKDIR /tmp
+RUN wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && \
+    gunzip GeoIP.dat.gz && \
+    mkdir /opt/geoip && \
+    mv /tmp/GeoIP.dat /opt/geoip/ && \
+    rm -rf /tmp/*
+
 RUN mkdir -p /app
 WORKDIR /app
 ENV PIP_PRE 1
