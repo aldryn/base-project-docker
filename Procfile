@@ -1,1 +1,1 @@
-web: ./launcher.sh
+web: /launch/web
