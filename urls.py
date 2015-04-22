@@ -31,5 +31,6 @@ urlpatterns = patterns(
     # TODO: this should come from a "django-select2" addon... but how to include custom urls?
     url(r'^/api/~select2/', include('django_select2.urls')),  # required by: djangocms-link
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^captcha/', include('captcha.urls')),  # TODO: this captcha should be an addon
     url(r'^', include('cms.urls')),
 )

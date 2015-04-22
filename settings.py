@@ -79,6 +79,7 @@ THUMBNAIL_PROCESSORS = (
 THUMBNAIL_SOURCE_GENERATORS = (
     'easy_thumbnails.source_generators.pil_image',
 )
+THUMBNAIL_CACHE_DIMENSIONS = True
 FILER_IMAGE_USE_ICON = True
 for app in ['filer', 'easy_thumbnails', 'mptt', 'polymorphic', 'cmsplugin_filer_file', 'cmsplugin_filer_image']:
     if app not in INSTALLED_APPS:
@@ -109,6 +110,9 @@ EXTRA_INSTALLED_APPS = [
     'djangocms_snippet',  # 'cms.plugins.snippet',
     'djangocms_googlemap',  # 'cms.plugins.googlemap',
     'django.contrib.sitemaps',
+    'captcha',
+    'treebeard',
+    'mptt',
 ]
 for app in EXTRA_INSTALLED_APPS:
     if app not in INSTALLED_APPS:
