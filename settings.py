@@ -43,8 +43,21 @@ if cache_url is not None:
     CACHES['default'] = django_cache_url.parse(cache_url)
 
 if 'CMS_LANGUAGES' in locals():
-    CMS_LANGUAGES = {int(key) if isinstance(key, basestring) and key.isdigit() else key: value for key, value in CMS_LANGUAGES.items()}
+    # convert site_ids that are strings instead of ints to ints
+    CMS_LANGUAGES = {
+        int(key) if isinstance(key, basestring) and key.isdigit() else key: value
+        for key, value in CMS_LANGUAGES.items()
+    }
 
+PARLER_LANGUAGES = {
+    # 'default': {
+    #     'fallback': 'en',             # defaults to PARLER_DEFAULT_LANGUAGE_CODE
+    #     'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
+    # }
+}
+for site_id, languages in CMS_LANGUAGES.items():
+    if isinstance(site_id, int):
+        PARLER_LANGUAGES[site_id] = [{'code': language['code'] for language in languages}]
 
 templates_json_filename = os.path.join(os.path.dirname(__file__), 'cms_templates.json')
 if os.path.exists(templates_json_filename):
