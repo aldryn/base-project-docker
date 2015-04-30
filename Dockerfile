@@ -1,4 +1,4 @@
-FROM aldryn/base:2.3
+FROM aldryn/base:2.4
 
 RUN npm install -g crawl
 WORKDIR /tmp
