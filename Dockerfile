@@ -1,4 +1,4 @@
-FROM aldryn/base:2.4
+FROM aldryn/base:2.5
 
 ADD build /build
 RUN /build/prepare
@@ -15,11 +15,6 @@ WORKDIR /app
 ENV PIP_PRE 1
 
 # support pip installing stuff from servers using TLS with SNI
-
-# TODO: move to aldryn/base image
-RUN curl -o /usr/local/bin/forego https://godist.herokuapp.com/projects/ddollar/forego/releases/current/linux-amd64/forego &&\
-    chmod u+x /usr/local/bin/forego
-
 RUN pip install pyOpenSSL==0.15.1 ndg-httpsclient==0.3.3 pyasn1==0.1.7 cryptography==0.8.2
 
 ADD requirements.txt /app/
