@@ -9,22 +9,21 @@
 BeautifulSoup==3.2.1
 # Django: many apps don't support Django 1.7 yet :-(
 Django==1.6.11   # rq.filter: <1.7
-Django-Select2==4.2.2
+Django-Select2==4.3.1
 Pillow==2.8.1
 PyYAML==3.11
 YURL==0.13
 South==1.0.2
-# Twisted is probably not actually needed (it's dependency of the server part of djeesefs)
-Twisted==14.0.2   # rq.filter: <15
-aldryn-boilerplates==0.6
+aldryn-boilerplates==0.7
 aldryn-common>=0.1.1
 aldryn-sites==0.5
 aldryn-snake==0.0.2
 argh==0.26.1
 argparse==1.3.0
-certifi==14.05.14
+certifi==2015.04.28
 chardet==2.3.0
 cmsplugin-filer==0.10.1
+cryptography==0.8.2
 dj-database-url==0.3.0
 dj-email-url==0.0.4
 dj-redis-url==0.1.4
@@ -44,9 +43,9 @@ django-hvad>=0.4.1
 # django-mptt >=0.7 does not work with django-cms
 django-mptt==0.6.1   # rq.filter: <0.7
 django-parler==1.4
-django-polymorphic==0.7
-django-redis-cache==0.13.0
-django-reversion==1.8.5
+django-polymorphic==0.7.1
+django-redis-cache==0.13.1
+django-reversion==1.8.6
 django-robots==1.0
 django-sekizai==0.8.1
 django-simple-captcha==0.4.5
@@ -54,31 +53,33 @@ django-simple-sso==0.9.3
 django-treebeard==3.0
 djangocms-admin-style==0.2.5
 djangocms-googlemap==0.2
-djangocms-link==1.5
+djangocms-link==1.6
 djangocms-snippet==1.5
 djangocms-text-ckeditor==2.4.3
-djeese-fs==0.1.17
+djeese-fs==0.1.20
 docopt==0.6.2
 easy-thumbnails==2.2
 gevent==1.0.1
 greenlet==0.4.5
 # gunicorn 19.0 is failing with --prefork
 gunicorn==18.0  # rq.filter: !=19.0
-hiredis==0.1.6
-html5lib==1.0b3
+hiredis==0.2.0
+html5lib==1.0b6
 itsdangerous==0.24
-lxml==3.4.3
+lxml==3.4.4
+ndg-httpsclient==0.3.3
 pathtools==0.1.2
 psycogreen==1.0
 psycopg2==2.6
+pyasn1==0.1.7
+pyOpenSSL==0.15.1
 pystache==0.5.4
-raven==5.2.0
+raven==5.3.1
 redis==2.10.3
-requests==2.6.0
+requests==2.6.2
 six==1.9.0
 static==1.1.1
 static3==0.5.1
 watchdog==0.8.3
 webservices==0.5
 wsgiref==0.1.2
-zope.interface==4.1.2
