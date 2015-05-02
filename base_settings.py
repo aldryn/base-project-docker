@@ -56,7 +56,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
     'sekizai.context_processors.sekizai',
-    'cms.context_processors.media',
+    'cms.context_processors.cms_settings',
     'cmscloud.context_processors.boilerplate',
     'cmscloud.context_processors.debug',
     'aldryn_snake.template_api.template_processor',
