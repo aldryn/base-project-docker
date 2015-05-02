@@ -1,6 +1,5 @@
 FROM aldryn/base:2.4
 
-RUN npm install -g crawl
 ADD build /build
 RUN /build/prepare
 
