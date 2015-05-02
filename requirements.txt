@@ -45,7 +45,8 @@ django-mptt==0.6.1   # rq.filter: <0.7
 django-parler==1.4
 django-polymorphic==0.7.1
 django-redis-cache==0.13.1
-django-reversion==1.8.6
+# django-reversion==1.8.6 fails on startup ("ImportError: No module named fields")
+django-reversion==1.8.5   # rq.filter: !=1.8.6
 django-robots==1.0
 django-sekizai==0.8.1
 django-simple-captcha==0.4.5
