@@ -1,7 +1,7 @@
 #!/bin/bash
-if [ $PAGESPEED == 'True' ]; then
+if [ $PAGESPEED ]; then
   echo "PAGESPEED is on (${PAGESPEED})"
-  if [ $BROWSERCACHE == 'True' ]; then
+  if [ $BROWSERCACHE ]; then
     echo "BROWSERCACHE is on (${BROWSERCACHE})"
     exec /launch/start_with_pagespeed_and_browsercache.sh
   else
