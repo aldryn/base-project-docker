@@ -18,7 +18,7 @@ certifi==2015.4.28
 cffi==1.0.dev2
 chardet==2.3.0
 cmsplugin-filer==0.10.1
-configobj==4.7.2
+configobj==5.0.6
 cryptography==0.8.2
 dj-database-url==0.3.0
 dj-email-url==0.0.4
@@ -28,7 +28,7 @@ Django==1.6.11  # rq.filter: <1.7
 django-appconf==1.0.1
 django-cache-url==0.8.0
 django-classy-tags==0.6.1
-django-cms==3.0.13   # rq.filter: <3.1
+django-cms==3.1   # rq.filter: <3.2
 django-compressor==1.5
 django-dotenv==1.3.0
 django-filer==0.9.9
@@ -59,24 +59,24 @@ docopt==0.6.2
 easy-thumbnails==2.2
 enum34==1.0.4
 gevent==1.0.1
-greenlet==0.4.5
+greenlet==0.4.6
 # gunicorn 19.0 and 19.3.0 are failing with --prefork
 gunicorn==18.0  # rq.filter: <19.0
 gyp==0.1
 hiredis==0.2.0
 html5lib==1.0b6
-httplib2==0.8
+httplib2==0.9.1
 itsdangerous==0.24
-keyring==3.5
+keyring==5.3
 launchpadlib==1.10.2
 lazr.restfulclient==0.13.3
 lazr.uri==1.0.3
 lxml==3.4.4
-meld3==0.6.10
-mercurial==2.8.2
+meld3==1.0.2
+mercurial==3.4
 ndg-httpsclient==0.3.3
 oauth==1.0.1
-paramiko==1.10.1
+paramiko==1.15.2
 pathtools==0.1.2
 Pillow==2.8.1
 psycogreen==1.0
@@ -91,19 +91,19 @@ pystache==0.5.4
 PyYAML==3.11
 raven==5.3.1
 redis==2.10.3
-requests==2.6.2
-SecretStorage==2.0.0
-simplejson==3.3.1
+requests==2.7.0
+SecretStorage==2.1.1
+simplejson==3.6.5
 six==1.9.0
 South==1.0.2
-ssh-import-id==3.21
+ssh-import-id==4.1
 static==1.1.1
 static3==0.5.1
-supervisor==3.0b2
+supervisor==3.1.3
 Unidecode==0.4.17
-urllib3==1.7.1
+urllib3==1.10.4
 wadllib==1.3.2
 watchdog==0.8.3
 webservices==0.5
 YURL==0.13
-zope.interface==4.0.5
+zope.interface==4.1.2
