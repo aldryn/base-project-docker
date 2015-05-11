@@ -68,7 +68,8 @@ html5lib==1.0b6
 httplib2==0.9.1
 itsdangerous==0.24
 keyring==5.3
-launchpadlib==1.10.3
+# launchpadlib==1.10.3 does not exist on pypi, but requires.io reports it as upgrade
+launchpadlib==1.10.2  # rq.filter: !=1.10.3
 lazr.restfulclient==0.13.3
 lazr.uri==1.0.3
 lxml==3.4.4
