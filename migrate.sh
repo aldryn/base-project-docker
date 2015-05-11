@@ -8,4 +8,6 @@ python manage.py syncdb --noinput
 python manage.py migrate --list --noinput
 python manage.py migrate --noinput
 python manage.py migrate --list --noinput
+python manage.py cms delete_orphaned_plugins --noinput
+python manage.py cms fix-mptt --noinput
 
