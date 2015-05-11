@@ -181,15 +181,16 @@ if 'CMS_LANGUAGES' in locals():
         for key, value in CMS_LANGUAGES.items()
     }
 
-PARLER_LANGUAGES = {
-    # 'default': {
-    #     'fallback': 'en',             # defaults to PARLER_DEFAULT_LANGUAGE_CODE
-    #     'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
-    # }
-}
+PARLER_LANGUAGES = {}
 for site_id, languages in CMS_LANGUAGES.items():
     if isinstance(site_id, int):
-        PARLER_LANGUAGES[site_id] = [{'code': language['code'] for language in languages}]
+        langs = [{'code': lang['code']} for lang in languages]
+        PARLER_LANGUAGES.update({site_id: langs})
+parler_defaults = {'fallback': LANGUAGE_CODE}
+for k, v in CMS_LANGUAGES.get('default', {}).items():
+    if k in ['hide_untranslated', ]:
+        parler_defaults.update({k: v})
+PARLER_LANGUAGES.update({'default': parler_defaults})
 
 templates_json_filename = os.path.join(os.path.dirname(__file__), 'cms_templates.json')
 if os.path.exists(templates_json_filename):
@@ -283,6 +284,13 @@ EXTRA_TEMPLATE_CONTEXT_PROCESSORS = [
 for context_processor in EXTRA_TEMPLATE_CONTEXT_PROCESSORS:
     if context_processor not in TEMPLATE_CONTEXT_PROCESSORS:
         TEMPLATE_CONTEXT_PROCESSORS.append(context_processor)
+
+# in this django-cms version there is no 'cms.context_processors.media' anymore
+# instead we should use 'cms.context_processors.cms_settings'.
+# This hack has to be here, because TEMPLATE_CONTEXT_PROCESSORS is generated on
+# controlpanel for all versions of the base project. It should really be defined in the
+# base project though.
+TEMPLATE_CONTEXT_PROCESSORS[TEMPLATE_CONTEXT_PROCESSORS.index('cms.context_processors.media')] = 'cms.context_processors.cms_settings'
 
 
 STATICFILES_FINDERS = [
