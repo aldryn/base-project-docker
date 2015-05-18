@@ -3,13 +3,12 @@ if [ $PAGESPEED ]; then
   echo "PAGESPEED is on (${PAGESPEED})"
   if [ $BROWSERCACHE ]; then
     echo "BROWSERCACHE is on (${BROWSERCACHE})"
-    exec /launch/start_with_pagespeed_and_browsercache.sh
+    exec /app/launch/start_with_pagespeed_and_browsercache.sh
   else
     echo "BROWSERCACHE is off (${BROWSERCACHE})"
-    exec /launch/start_with_pagespeed.sh
+    exec /app/launch/start_with_pagespeed.sh
   fi
 else
-  echo "NO PAGESPEED OR BROWSERCACHE... using gunicorn only"
-#  exec /launch/start_with_nginx.sh
-  exec /launch/start_gunicorn.sh
+  echo "NO PAGESPEED OR BROWSERCACHE... using pure gunicorn without nginx"
+  exec /app/launch/start_gunicorn.sh
 fi

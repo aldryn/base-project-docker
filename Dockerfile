@@ -21,11 +21,11 @@ ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
 RUN pip install --use-wheel -r requirements.txt
 ADD . /app/
-ADD launch /launch
 ENV GUNICORN_LOG_LEVEL info
 ENV GUNICORN_WORKERS 2
 ENV GUNICORN_TIMEOUT 120
 ENV GUNICORN_MAX_REQUESTS 1000
 ENV GUNICORN_PORT 80
+ENV ENABLE_GEVENT 0
 EXPOSE 80
 CMD start web

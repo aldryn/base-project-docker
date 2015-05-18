@@ -1,1 +1,6 @@
-exec gunicorn wsgi:application -b 0.0.0.0:${GUNICORN_PORT:-80} --worker-class gevent -w ${GUNICORN_WORKERS:-4} --max-requests=${GUNICORN_MAX_REQUESTS} --preload --graceful-timeout=${GUNICORN_TIMEOUT} --timeout=${GUNICORN_TIMEOUT} --access-logfile - --error-logfile - --log-level ${GUNICORN_LOG_LEVEL}
+#!/bin/bash
+if [ $ENABLE_GEVENT ]; then
+    exec /app/launch/start_gunicorn_with_gevent.sh
+else
+    exec /app/launch/start_gunicorn_without_gevent.sh
+fi

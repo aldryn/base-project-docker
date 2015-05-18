@@ -1,2 +1,2 @@
-web: /launch/web
+web: /app/launch/web
 migrate: /app/migrate.sh

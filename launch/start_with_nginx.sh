@@ -1,3 +1,4 @@
+#!/bin/bash
 BASEDIR=/launch/nginx
 cp ${BASEDIR}/nginx.conf /etc/nginx/nginx.conf
 /bin/sed -i "s/DOMAIN/${DOMAIN}/" /etc/nginx/nginx.conf
