@@ -17,15 +17,16 @@ ENV PIP_PRE 1
 # support pip installing stuff from servers using TLS with SNI
 RUN pip install pyOpenSSL==0.15.1 ndg-httpsclient==0.3.3 pyasn1==0.1.7 cryptography==0.8.2
 
+ADD requirements-base.txt /app/
 ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
-RUN pip install --use-wheel -r requirements.txt
+RUN pip install --use-wheel -r requirements-base.txt
 ADD . /app/
 ENV GUNICORN_LOG_LEVEL info
 ENV GUNICORN_WORKERS 2
 ENV GUNICORN_TIMEOUT 120
 ENV GUNICORN_MAX_REQUESTS 1000
 ENV GUNICORN_PORT 80
-ENV ENABLE_GEVENT 0
+ENV ENABLE_GEVENT false
 EXPOSE 80
 CMD start web
