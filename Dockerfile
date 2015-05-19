@@ -20,7 +20,7 @@ RUN pip install pyOpenSSL==0.15.1 ndg-httpsclient==0.3.3 pyasn1==0.1.7 cryptogra
 ADD requirements-base.txt /app/
 ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
-RUN pip install --use-wheel -r requirements-base.txt
+RUN pip install --use-wheel -r requirements.txt
 ADD . /app/
 ENV GUNICORN_LOG_LEVEL info
 ENV GUNICORN_WORKERS 2

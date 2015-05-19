@@ -35,8 +35,10 @@ django-appconf
 django-dotenv
 django-getenv
 django-redis-cache
+redis
 hiredis
 aldryn-client
+webservices
 raven
 opbeat
 
