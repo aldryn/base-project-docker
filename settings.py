@@ -164,11 +164,10 @@ if DOMAIN:
 
 
 if env('DEFAULT_STORAGE_DSN'):
-    storage_config = env('DEFAULT_STORAGE_DSN')
-else:
-    storage_config = DEFAULT_STORAGE_DSN
+    DEFAULT_STORAGE_DSN = env('DEFAULT_STORAGE_DSN')
 
-locals().update(parse_storage_url(storage_config))
+if 'DEFAULT_STORAGE_DSN' in locals():
+    locals().update(parse_storage_url(DEFAULT_STORAGE_DSN))
 
 
 # all strings are unicode after loading from json. But some settings MUST BE STRINGS
