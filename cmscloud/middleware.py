@@ -2,14 +2,79 @@
 """
 Access Control Middleware
 """
+import datetime
 from django.conf import settings
 from django.contrib.auth import login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
+from django.core import signing
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 
 from cmscloud.sso import ALDRYN_USER_SESSION_KEY
+
+import logging
+logger = logging.getLogger('aldryn')
+
+
+DEMO_ACCESS_TOKEN_KEY_NAME = getattr(settings, 'DEMO_ACCESS_TOKEN_KEY_NAME', None)
+DEMO_ACCESS_SECRET_STRING = getattr(settings, 'DEMO_ACCESS_SECRET_STRING', None)
+DEMO_ACCESS_TIMEOUT_KEY_NAME = '{}-timeout_at'.format(DEMO_ACCESS_TOKEN_KEY_NAME)
+DEMO_MODE_ACTIVE = getattr(settings, 'DEMO_MODE_ACTIVE', None)
+
+
+class DemoAccessControlMiddleware(object):
+    def process_request(self, request):
+        if not DEMO_MODE_ACTIVE:
+            return
+
+        if self.demo_expired(request):
+            return TemplateResponse(request, 'cmscloud/demo_expired.html')
+
+        if self.check_signature(request):
+            self.init_user(request)
+
+    def demo_expired(self, request):
+        timeout_at = request.session.get(DEMO_ACCESS_TIMEOUT_KEY_NAME, None)
+        if timeout_at:
+            timeout_at = datetime.datetime(*timeout_at[0:7])
+            timeout_in = timeout_at - datetime.datetime.now()
+            if timeout_in <= datetime.timedelta(0):
+                timeout_in = datetime.timedelta(0)
+            logger.info('demo: timeout at {} ({} left)'.format(
+                timeout_at,
+                timeout_in,
+            ))
+            return timeout_at < datetime.datetime.now()
+
+    def check_signature(self, request):
+        demo_access_token = request.GET.get(DEMO_ACCESS_TOKEN_KEY_NAME, None)
+        if not demo_access_token:
+            return None
+
+        signer = signing.Signer(DEMO_ACCESS_SECRET_STRING)
+        try:
+            timeout = signer.unsign(demo_access_token)
+            timeout = datetime.timedelta(seconds=int(timeout))
+            timeout_datetime = datetime.datetime.now() + timeout
+            request.session[DEMO_ACCESS_TIMEOUT_KEY_NAME] = tuple((timeout_datetime).timetuple())
+            request.session.save()
+            return True
+        except (signing.BadSignature, ValueError) as e:
+            logger.warning('invalid demo signature {}'.format(e))
+            return False
+
+    def init_user(self, request):
+        try:
+            user = User.objects.get(username='aldryn demo')
+        except User.DoesNotExist:
+            user = User(username='aldryn demo')
+        user.is_staff = True
+        user.is_superuser = True
+        user.is_active = True
+        user.save()
+        user.backend = "%s.%s" % (ModelBackend.__module__, ModelBackend.__name__)
+        login(request, user)
 
 
 class AccessControlMiddleware(object):
@@ -31,27 +96,6 @@ class AccessControlMiddleware(object):
         if settings.SHARING_VIEW_ONLY_SECRET_TOKEN == token:
             request.session[settings.SHARING_VIEW_ONLY_TOKEN_KEY_NAME] = token
             return HttpResponseRedirect('/')
-
-        # check if it's a demo website in which case look for the demo access token
-        DEMO_ACCESS_TOKEN_KEY_NAME = getattr(settings, 'DEMO_ACCESS_TOKEN_KEY_NAME', None)
-        DEMO_ACCESS_SECRET_STRING = getattr(settings, 'DEMO_ACCESS_SECRET_STRING', None)
-        if DEMO_ACCESS_TOKEN_KEY_NAME and DEMO_ACCESS_SECRET_STRING:
-            demo_access_token = request.GET.get(DEMO_ACCESS_TOKEN_KEY_NAME, None)
-            if DEMO_ACCESS_SECRET_STRING == demo_access_token:
-                request.session[DEMO_ACCESS_TOKEN_KEY_NAME] = demo_access_token
-                try:
-                    user = User.objects.get(username='aldryn demo')
-                except User.DoesNotExist:
-                    user = User(username='aldryn demo')
-                user.is_staff = True
-                user.is_superuser = True
-                user.is_active = True
-                user.save()
-                user.backend = "%s.%s" % (ModelBackend.__module__, ModelBackend.__name__)
-                login(request, user)
-                return HttpResponseRedirect('/')
-            else:
-                return TemplateResponse(request, 'cmscloud/demo_expired.html')
 
         return TemplateResponse(request, 'cmscloud/login_screen.html')
 
