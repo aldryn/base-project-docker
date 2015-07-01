@@ -76,7 +76,6 @@ ROOT_URLCONF = 'urls'
 CMSCLOUD_STATIC_URL = 'https://static.aldryn.com/'
 
 TEMPLATE_DIRS = [
-    os.path.join(PROJECT_DIR, 'cmscloud/templates'),
     os.path.join(PROJECT_DIR, 'templates'),
     os.path.join(PROJECT_DIR, 'custom_templates'),
 ]
@@ -110,6 +109,10 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
+        },
+        'aldryn': {
+            'handlers': ['console'],
+            'level': 'INFO',
         },
         # 'py.warnings': {
         #     'handlers': ['console'],
@@ -271,6 +274,10 @@ for middleware in EXTRA_MIDDLEWARE_CLASSES:
 # aldryn-sites middleware should be near the top
 MIDDLEWARE_CLASSES.insert(0, 'aldryn_sites.middleware.SiteMiddleware')
 
+MIDDLEWARE_CLASSES.insert(
+    MIDDLEWARE_CLASSES.index('cmscloud.middleware.AccessControlMiddleware'),
+    'cmscloud.middleware.DemoAccessControlMiddleware'
+)
 
 # extra TEMPLATE_CONTEXT_PROCESSORS
 EXTRA_TEMPLATE_CONTEXT_PROCESSORS = [
@@ -376,3 +383,11 @@ if 'LAST_BOILERPLATE_COMMIT' not in locals():
     LAST_BOILERPLATE_COMMIT = None
 if 'SYNC_CHANGED_FILES_URL' not in locals():
     SYNC_CHANGED_FILES_URL = None
+
+# demo mode
+DEMO_MODE_ACTIVE = bool(
+    locals().get('DEMO_ACCESS_TOKEN_KEY_NAME', False) and \
+    locals().get('DEMO_ACCESS_SECRET_STRING', False)
+)
+if DEMO_MODE_ACTIVE:
+    CMSCLOUD_SYNC_KEY = None
