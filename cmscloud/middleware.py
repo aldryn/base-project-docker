@@ -28,11 +28,9 @@ class DemoAccessControlMiddleware(object):
         if not DEMO_MODE_ACTIVE:
             return
 
-        print "CHECK SIGNATIURE"
         if self.check_signature(request):
             self.init_user(request)
 
-        print "CHECK EXPIRED"
         if self.demo_expired(request):
             return TemplateResponse(request, 'cmscloud/demo_expired.html')
 
@@ -91,6 +89,10 @@ class DemoAccessControlMiddleware(object):
 
 class AccessControlMiddleware(object):
     def process_request(self, request):
+        demo_access_control = DemoAccessControlMiddleware().process_request(request=request)
+        if demo_access_control is not None:
+            return demo_access_control
+
         if request.user.is_authenticated():
             # the user is already logged in
             return None
