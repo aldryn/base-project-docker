@@ -30,6 +30,7 @@ class DemoAccessControlMiddleware(object):
 
         if self.check_signature(request):
             self.init_user(request)
+            return HttpResponseRedirect('/')
 
         if self.demo_expired(request):
             return TemplateResponse(request, 'cmscloud/demo_expired.html')
