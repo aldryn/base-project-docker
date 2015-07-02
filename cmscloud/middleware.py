@@ -71,6 +71,8 @@ class DemoAccessControlMiddleware(object):
                 request.session[DEMO_ACCESS_TIMEOUT_KEY_NAME] = tuple((timeout_datetime).timetuple())
                 request.session.save()
                 return True
+            else:
+                return None
         except (signing.BadSignature, ValueError) as e:
             logger.warning('invalid demo signature {}'.format(e))
             return False
