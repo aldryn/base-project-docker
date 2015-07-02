@@ -45,6 +45,8 @@ opbeat
 dj-static
 djeese-fs
 django-simple-sso
+django-storages
+boto
 
 gevent
 # gunicorn 19.0 and 19.3.0 are failing with --prefork

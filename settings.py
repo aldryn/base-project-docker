@@ -5,6 +5,9 @@ import django_cache_url
 from getenv import env
 import json
 
+from django_storage_url import parse_storage_url
+
+
 gettext = lambda s: s
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -161,6 +164,14 @@ if DOMAIN:
             'redirects': [d.strip() for d in DOMAIN_REDIRECTS.split(',') if d.strip()]
         }
     }
+
+
+if env('DEFAULT_STORAGE_DSN'):
+    DEFAULT_STORAGE_DSN = env('DEFAULT_STORAGE_DSN')
+
+if 'DEFAULT_STORAGE_DSN' in locals():
+    locals().update(parse_storage_url(DEFAULT_STORAGE_DSN))
+
 
 # all strings are unicode after loading from json. But some settings MUST BE STRINGS
 if isinstance(locals().get('EMAIL_HOST_PASSWORD', None), unicode):
