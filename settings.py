@@ -285,11 +285,6 @@ for middleware in EXTRA_MIDDLEWARE_CLASSES:
 # aldryn-sites middleware should be near the top
 MIDDLEWARE_CLASSES.insert(0, 'aldryn_sites.middleware.SiteMiddleware')
 
-MIDDLEWARE_CLASSES.insert(
-    MIDDLEWARE_CLASSES.index('cmscloud.middleware.AccessControlMiddleware'),
-    'cmscloud.middleware.DemoAccessControlMiddleware'
-)
-
 # extra TEMPLATE_CONTEXT_PROCESSORS
 EXTRA_TEMPLATE_CONTEXT_PROCESSORS = [
     'aldryn_boilerplates.context_processors.boilerplate',
