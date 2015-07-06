@@ -20,6 +20,7 @@ logger = logging.getLogger('aldryn')
 DEMO_ACCESS_TOKEN_KEY_NAME = getattr(settings, 'DEMO_ACCESS_TOKEN_KEY_NAME', None)
 DEMO_ACCESS_SECRET_STRING = getattr(settings, 'DEMO_ACCESS_SECRET_STRING', None)
 DEMO_ACCESS_TIMEOUT_KEY_NAME = '{}-timeout_at'.format(DEMO_ACCESS_TOKEN_KEY_NAME)
+DEMO_ACCESS_TIMEOUT_IN_S_KEY_NAME = getattr(settings, 'DEMO_ACCESS_TIMEOUT_IN_S_KEY_NAME', 'demo_timeout_s')
 DEMO_MODE_ACTIVE = getattr(settings, 'DEMO_MODE_ACTIVE', None)
 
 
@@ -36,6 +37,11 @@ class DemoAccessControlMiddleware(object):
             return TemplateResponse(request, 'cmscloud/demo_expired.html')
 
     def demo_expired(self, request):
+        """
+        Checks whether the demo has expired. Not having a timeout session variable is considered
+        as timed out.
+        Warning: side-effects! saves the timeout in s on the request for usage in the frontend.
+        """
         timeout_at = request.session.get(DEMO_ACCESS_TIMEOUT_KEY_NAME, None)
         if timeout_at:
             timeout_at = datetime.datetime(*timeout_at[0:7])
@@ -46,11 +52,18 @@ class DemoAccessControlMiddleware(object):
                 timeout_at,
                 timeout_in,
             ))
+            setattr(request, DEMO_ACCESS_TIMEOUT_IN_S_KEY_NAME, int(timeout_in.total_seconds()))
             return timeout_at < datetime.datetime.now()
         else:
+            logger.info('demo: no timeout session variable set')
+            setattr(request, DEMO_ACCESS_TIMEOUT_IN_S_KEY_NAME, 0)
             return True
 
     def check_signature(self, request):
+        """
+        Checks whether the there is a signature in the url and whether it is valid.
+        Warning: side-effects! saves the timeout in the session if the singature is valid.
+        """
         demo_access_token = request.GET.get(DEMO_ACCESS_TOKEN_KEY_NAME, None)
         if not demo_access_token:
             return None
@@ -78,6 +91,9 @@ class DemoAccessControlMiddleware(object):
             return False
 
     def init_user(self, request):
+        """
+        Create and login a demo user.
+        """
         try:
             user = User.objects.get(username='aldryn demo')
         except User.DoesNotExist:
