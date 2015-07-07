@@ -22,6 +22,7 @@ ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
 RUN pip install --use-wheel -r requirements.txt
 ADD . /app/
+RUN /app/patches/apply.sh
 ENV GUNICORN_LOG_LEVEL info
 ENV GUNICORN_WORKERS 2
 ENV GUNICORN_TIMEOUT 120
