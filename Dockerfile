@@ -23,11 +23,12 @@ ADD generated_requirements.txt /app/
 RUN pip install --use-wheel -r requirements.txt
 ADD . /app/
 RUN /app/patches/apply.sh
-ENV GUNICORN_LOG_LEVEL info
-ENV GUNICORN_WORKERS 2
-ENV GUNICORN_TIMEOUT 120
-ENV GUNICORN_MAX_REQUESTS 1000
-ENV GUNICORN_PORT 80
-ENV ENABLE_GEVENT false
+ENV GUNICORN_LOG_LEVEL=info\
+    GUNICORN_WORKERS=2\
+    GUNICORN_TIMEOUT=120\
+    GUNICORN_MAX_REQUESTS=1000\
+    GUNICORN_PORT=80\
+    ENABLE_GEVENT=false\
+    PATH=/app/node_modules/.bin:$PATH
 EXPOSE 80
 CMD start web
