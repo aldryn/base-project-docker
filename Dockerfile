@@ -21,6 +21,8 @@ ADD requirements-base.txt /app/
 ADD requirements.txt /app/
 ADD generated_requirements.txt /app/
 RUN pip install --use-wheel -r requirements.txt
+ADD package.json /app/
+RUN npm install
 ADD . /app/
 RUN /app/patches/apply.sh
 ENV GUNICORN_LOG_LEVEL=info\
