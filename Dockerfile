@@ -1,4 +1,4 @@
-FROM aldryn/base:2.5
+FROM aldryn/base:2.6
 
 ADD build /build
 RUN /build/prepare
