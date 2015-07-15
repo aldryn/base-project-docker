@@ -1,6 +1,8 @@
+--extra-index-url https://devpi.divio.ch/divio/django-backports/+simple/
+
 ## basics
-Django==1.6.11  # rq.filter: <1.7
-django-cms==3.0.13   # rq.filter: <3.1
+Django==1.6.11.post1  # rq.filter: <1.7
+django-cms==3.0.14   # rq.filter: <3.1
 
 # django-mptt >=0.7 does not work with django-cms
 django-mptt==0.6.1  # rq.filter: <0.7
