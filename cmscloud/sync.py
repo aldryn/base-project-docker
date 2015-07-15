@@ -69,7 +69,7 @@ def _sync_changed_files(sync_key, last_commit_hash, sync_url, project_dir):
             tarball = tarfile.open(mode='r:gz', fileobj=temp_file)
             for member in tarball.getmembers():
                 path = member.name
-                if path.startswith(('static/', 'templates/')):
+                if path.startswith(('private/', 'static/', 'templates/')):
                     full_path = os.path.join(project_dir, path)
                     directory = os.path.dirname(full_path)
                     if not os.path.exists(directory):
