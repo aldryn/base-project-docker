@@ -10,6 +10,9 @@ from django_storage_url import parse_storage_url
 
 gettext = lambda s: s
 
+if env('SECRET_KEY'):
+    SECRET_KEY = env('SECRET_KEY')
+
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 DATA_ROOT = os.path.join(PROJECT_DIR, 'data')
@@ -53,7 +56,28 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-# WARN: these are all overwritten from settings.json! (I think)
+# WARN: these are all overwritten from settings.json!
+INSTALLED_APPS = [
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'djangocms_admin_style',  # must be before admin to override base template
+    'django.contrib.admin',
+    'django.contrib.staticfiles',
+    'cms',
+    'menus',
+    'mptt',
+    'south',
+    'raven.contrib.django',
+    'sekizai',
+    'gunicorn',
+    'cmscloud',
+    # TODO: remove django-compressor from here. It should be an addon and a "boilerplate-dependency"
+    'compressor',
+]
+MIDDLEWARE_CLASSES = []
 TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.i18n',
@@ -190,16 +214,17 @@ if 'CMS_LANGUAGES' in locals():
         for key, value in CMS_LANGUAGES.items()
     }
 
-PARLER_LANGUAGES = {}
-for site_id, languages in CMS_LANGUAGES.items():
-    if isinstance(site_id, int):
-        langs = [{'code': lang['code']} for lang in languages]
-        PARLER_LANGUAGES.update({site_id: langs})
-parler_defaults = {'fallback': LANGUAGE_CODE}
-for k, v in CMS_LANGUAGES.get('default', {}).items():
-    if k in ['hide_untranslated', ]:
-        parler_defaults.update({k: v})
-PARLER_LANGUAGES.update({'default': parler_defaults})
+if 'CMS_LANGUAGES' in locals():
+    PARLER_LANGUAGES = {}
+    for site_id, languages in CMS_LANGUAGES.items():
+        if isinstance(site_id, int):
+            langs = [{'code': lang['code']} for lang in languages]
+            PARLER_LANGUAGES.update({site_id: langs})
+    parler_defaults = {'fallback': LANGUAGE_CODE}
+    for k, v in CMS_LANGUAGES.get('default', {}).items():
+        if k in ['hide_untranslated', ]:
+            parler_defaults.update({k: v})
+    PARLER_LANGUAGES.update({'default': parler_defaults})
 
 templates_json_filename = os.path.join(os.path.dirname(__file__), 'cms_templates.json')
 if os.path.exists(templates_json_filename):
@@ -212,8 +237,7 @@ if os.path.exists(templates_json_filename):
 
 if 'DATABASES' not in locals() or 'DATABASES' in locals() and 'default' not in DATABASES:
     localname = os.environ.get("LOCAL_DATABASE_NAME", ":memory:")
-    print "USING IN %s SQLITE3" % localname
-    print "NO DATABASE CONFIGURED!!! USING %s SQLITE3 DATABASE!!!"
+    print "NO DATABASE CONFIGURED!!! USING %s SQLITE3 DATABASE!!!" % localname
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -236,6 +260,7 @@ THUMBNAIL_SOURCE_GENERATORS = (
 )
 THUMBNAIL_CACHE_DIMENSIONS = True
 FILER_IMAGE_USE_ICON = True
+
 for app in ['filer', 'easy_thumbnails', 'mptt', 'polymorphic', 'cmsplugin_filer_file', 'cmsplugin_filer_image']:
     if app not in INSTALLED_APPS:
         INSTALLED_APPS.append(app)
@@ -298,7 +323,8 @@ for context_processor in EXTRA_TEMPLATE_CONTEXT_PROCESSORS:
 # This hack has to be here, because TEMPLATE_CONTEXT_PROCESSORS is generated on
 # controlpanel for all versions of the base project. It should really be defined in the
 # base project though.
-TEMPLATE_CONTEXT_PROCESSORS[TEMPLATE_CONTEXT_PROCESSORS.index('cms.context_processors.media')] = 'cms.context_processors.cms_settings'
+if 'cms.context_processors.media' in TEMPLATE_CONTEXT_PROCESSORS:
+    TEMPLATE_CONTEXT_PROCESSORS[TEMPLATE_CONTEXT_PROCESSORS.index('cms.context_processors.media')] = 'cms.context_processors.cms_settings'
 
 
 STATICFILES_FINDERS = [
