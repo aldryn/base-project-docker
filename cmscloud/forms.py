@@ -10,14 +10,6 @@ class DeleteForm(forms.Form):
     signature = forms.CharField(required=True)
     path = forms.CharField(required=True)
 
-    def clean_path(self):
-        path = self.cleaned_data.get('path', '')
-        if path == 'cms_templates.json':
-            return path
-        elif not path.startswith(('static/', 'templates/')):
-            raise forms.ValidationError('Invalid path: "%s"' % path)
-        return path
-
     def clean(self):
         data = super(DeleteForm, self).clean()
         path = data['path']
