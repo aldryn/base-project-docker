@@ -314,14 +314,16 @@ for app in EXTRA_INSTALLED_APPS:
 
 # extra MIDDLEWARE_CLASSES
 EXTRA_MIDDLEWARE_CLASSES = [
-    'cmscloud.middleware.CurrentSiteMiddleware',
     'cmscloud.middleware.AldrynUserMiddleware',
 ]
 for middleware in EXTRA_MIDDLEWARE_CLASSES:
     if middleware not in MIDDLEWARE_CLASSES:
         MIDDLEWARE_CLASSES.append(middleware)
-# aldryn-sites middleware should be near the top
-MIDDLEWARE_CLASSES.insert(0, 'aldryn_sites.middleware.SiteMiddleware')
+# aldryn-sites and current site middleware should be near the top
+if 'cmscloud.middleware.CurrentSiteMiddleware' not in MIDDLEWARE_CLASSES:
+    MIDDLEWARE_CLASSES.insert(0, 'cmscloud.middleware.CurrentSiteMiddleware')
+if 'aldryn_sites.middleware.SiteMiddleware' not in MIDDLEWARE_CLASSES:
+    MIDDLEWARE_CLASSES.insert(0, 'aldryn_sites.middleware.SiteMiddleware')
 
 # extra TEMPLATE_CONTEXT_PROCESSORS
 EXTRA_TEMPLATE_CONTEXT_PROCESSORS = [
