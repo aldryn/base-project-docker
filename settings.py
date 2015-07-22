@@ -113,7 +113,10 @@ CMS_TEMPLATES = [
 
 ROOT_URLCONF = 'urls'
 
-CMSCLOUD_STATIC_URL = 'https://static.aldryn.com/'
+CMSCLOUD_STATIC_URL = env(
+    'CMSCLOUD_STATIC_URL',
+    locals().get('CMSCLOUD_STATIC_URL', 'https://static.aldryn.com/'),
+)
 
 TEMPLATE_DIRS = [
     os.path.join(PROJECT_DIR, 'templates'),
