@@ -67,6 +67,7 @@ lxml
 django-treebeard
 django-simple-captcha
 BeautifulSoup
+subprocess32
 
 
 ## basic apps
