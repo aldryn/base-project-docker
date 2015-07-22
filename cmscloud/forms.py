@@ -36,3 +36,17 @@ class AddForm(DeleteForm):
             if not constant_time_compare(signature, generated_signature):
                 raise forms.ValidationError("Invalid signature")
         return data
+
+
+class RunCommandForm(forms.Form):
+    signature = forms.CharField(required=True)
+    command = forms.CharField(required=True)
+
+    def clean(self):
+        data = super(RunCommandForm, self).clean()
+        command = data['command']
+        signature = data['signature']
+        generated_signature = hmac.new(str(settings.CMSCLOUD_SYNC_KEY), command, hashlib.sha1).hexdigest()
+        if not constant_time_compare(signature, generated_signature):
+            raise forms.ValidationError("Invalid signature")
+        return data

@@ -14,11 +14,12 @@ from django.forms.forms import NON_FIELD_ERRORS
 from django.http import (
     HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, Http404)
 from django.template.loader import render_to_string
-from django.views.generic import View
+from django.views.generic import View, FormView
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 
-from cmscloud.forms import AddForm, DeleteForm
+from cmscloud.forms import AddForm, DeleteForm, RunCommandForm
 from cmscloud.sync import sync_changed_files
+from cmscloud.run_command import run_command
 
 LIVERELOAD_ACTIVE_SESSION_KEY = '_livereload_active'
 LIVERELOAD_ACTIVE_DEFAULT = True
@@ -176,3 +177,20 @@ def trigger_sync_changed_files(request):
                 sync_key, settings.LAST_BOILERPLATE_COMMIT,
                 settings.SYNC_CHANGED_FILES_URL, settings.PROJECT_DIR)
     return HttpResponse('ok')
+
+
+class RunCommandView(FormView):
+    form_class = RunCommandForm
+    http_method_names = ['post',]
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        result = run_command(data['command'])
+        data = json.dumps(
+            result,
+            indent=2,
+            sort_keys=True,
+        )
+        if result.get('returncode', None) != 0:
+            return HttpResponseBadRequest(data, content_type='application/json')
+        return HttpResponse(data, content_type='application/json')

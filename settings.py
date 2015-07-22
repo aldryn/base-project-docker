@@ -113,8 +113,6 @@ CMS_TEMPLATES = [
 
 ROOT_URLCONF = 'urls'
 
-CMSCLOUD_STATIC_URL = 'https://static.aldryn.com/'
-
 TEMPLATE_DIRS = [
     os.path.join(PROJECT_DIR, 'templates'),
     os.path.join(PROJECT_DIR, 'custom_templates'),
@@ -257,6 +255,11 @@ if 'DATABASES' not in locals() or 'DATABASES' in locals() and 'default' not in D
             'NAME': localname,
         }
     }
+
+CMSCLOUD_STATIC_URL = env(
+    'CMSCLOUD_STATIC_URL',
+    locals().get('CMSCLOUD_STATIC_URL', 'https://static.aldryn.com/'),
+)
 
 # TODO: remove django-filer stuff from here. It should be an addon.
 THUMBNAIL_QUALITY = 90

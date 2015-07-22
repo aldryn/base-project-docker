@@ -2,7 +2,8 @@
 from django.conf.urls import patterns, url
 from django.views.decorators.csrf import csrf_exempt
 
-from cmscloud.views import Add, Delete, get_livereload_iframe_content, toggle_livereload
+from cmscloud.views import Add, Delete, get_livereload_iframe_content, toggle_livereload, \
+    RunCommandView
 
 urlpatterns = patterns(
     '',
@@ -13,4 +14,5 @@ urlpatterns = patterns(
         name='livereload-iframe-content'),
     url(r'^toggle-livereload/$', toggle_livereload,
         name='toggle-livereload'),
+    url(r'^run-command/$', csrf_exempt(RunCommandView.as_view())),
 )
