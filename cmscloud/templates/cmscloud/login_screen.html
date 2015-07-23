@@ -14,24 +14,26 @@
         <link rel="stylesheet" href="https://static.aldryn.com/css/base.css">
     </head>
     <body class="container tpl-messages">
-        <div id="login" class="mainbox col-md-12 col-md-offset-6 col-sm-16 col-sm-offset-4">
+        <div id="login" class="mainbox col-lg-14 col-lg-offset-5 col-md-16 col-md-offset-4 col-sm-22 col-sm-offset-1">
             <div class="panel panel-default">
-                <div class="panel-body">
-                    <div  class="form-group">
-                        {% if request.site.name %}<h2 class="project-title">{{ request.site.name }}</h2>{% endif %}
-                        <h3 class="page-status">Your page is ready</h3>
-                        <p class="help-block page-explanation">Just click on the login button to access it:</p>
+                <div class="panel-body logo-centered">
+                    <div class="row">
+                        <div class="col-xs-24 col-sm-offset-12 col-sm-12">
+                            <div  class="form-group">
+                                {% if request.site.name %}<h2 class="project-title">{{ request.site.name }}</h2>{% endif %}
+                                <h3 class="page-status">Your page is ready</h3>
+                                <p class="help-block page-explanation">Just click on the login button to access it:</p>
+                            </div>
+                            <p class="text-left"><a
+                                    class="btn btn-marketing with-brand-icon"
+                                    href="/login/">
+                                    <span aria-hidden="true" class="aldryn-icon"></span>
+                                    Sign in with aldryn
+                            </a></p>
+                        </div>
                     </div>
-                    <p class="text-center"><a
-                            class="btn btn-lg btn-marketing btn-lg-with-icon"
-                            href="/login/">
-                            <span aria-hidden="true" class="aldryn-icon"></span>
-                            Sign in with aldryn
-                    </a></p>
+                    <div class="logo-container"></div>
                 </div>
-            </div>
-            <div class="text-center brand-logo">
-                <a href="http://www.aldryn.com" class="logo dark">aldryn.com</a>
             </div>
         </div>
         <script type="text/javascript">
