@@ -12,8 +12,8 @@ class DeleteForm(forms.Form):
 
     def clean(self):
         data = super(DeleteForm, self).clean()
-        path = data['path']
-        signature = data['signature']
+        path = data.get('path')
+        signature = data.get('signature')
         generated_signature = hmac.new(str(settings.CMSCLOUD_SYNC_KEY), path, hashlib.sha1).hexdigest()
         if not constant_time_compare(signature, generated_signature):
             raise forms.ValidationError("Invalid signature")
@@ -44,8 +44,8 @@ class RunCommandForm(forms.Form):
 
     def clean(self):
         data = super(RunCommandForm, self).clean()
-        command = data['command']
-        signature = data['signature']
+        command = data.get('command')
+        signature = data.get('signature')
         generated_signature = hmac.new(str(settings.CMSCLOUD_SYNC_KEY), command, hashlib.sha1).hexdigest()
         if not constant_time_compare(signature, generated_signature):
             raise forms.ValidationError("Invalid signature")
