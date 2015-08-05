@@ -1,30 +1,16 @@
-FROM aldryn/base:2.6
+FROM minimal_base
 
 ADD build /build
+ENV NPS_VERSION=1.9.32.3\
+    NGINX_VERSION=1.6.3
 RUN /build/prepare
-
-WORKDIR /tmp
-RUN wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && \
-    gunzip GeoIP.dat.gz && \
-    mkdir /opt/geoip && \
-    mv /tmp/GeoIP.dat /opt/geoip/ && \
-    rm -rf /tmp/*
 
 RUN mkdir -p /app
 WORKDIR /app
 ENV PIP_PRE 1
 
 # support pip installing stuff from servers using TLS with SNI
-RUN pip install pyOpenSSL==0.15.1 ndg-httpsclient==0.3.3 pyasn1==0.1.7 cryptography==0.8.2
-
-ADD requirements-base.txt /app/
-ADD requirements.txt /app/
-ADD generated_requirements.txt /app/
-RUN pip install --use-wheel -r requirements.txt
-ADD package.json /app/
-RUN npm install
-ADD . /app/
-RUN /app/patches/apply.sh
+#RUN pip install pyOpenSSL==0.15.1 ndg-httpsclient==0.3.3 pyasn1==0.1.7 cryptography==0.8.2
 ENV GUNICORN_LOG_LEVEL=info\
     GUNICORN_WORKERS=2\
     GUNICORN_TIMEOUT=120\
@@ -34,3 +20,8 @@ ENV GUNICORN_LOG_LEVEL=info\
     PATH=/app/node_modules/.bin:$PATH
 EXPOSE 80
 CMD start web
+
+ONBUILD ADD . /app
+ONBUILD RUN if [ -f requirements.in ] ; then pip-compile requirements.in; fi
+ONBUILD RUN if [ -f requirements.txt ] ; then pip install --trusted-host mypypi.local.aldryn.net --find-links=https://mypypi.local.aldryn.net -r requirements.txt; fi
+ONBUILD RUN if [ -f package.json ] ; then npm install; fi

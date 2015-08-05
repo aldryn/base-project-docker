@@ -1,4 +1,4 @@
-# aldryn/cloud-base-project
+# aldryn/base-project
 
 [![](https://badge.imagelayers.io/aldryn/cloud-base-project.svg)](https://imagelayers.io/?images=aldryn/cloud-base-project:latest 'Get your own badge on imagelayers.io')
 
