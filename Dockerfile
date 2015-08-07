@@ -1,4 +1,4 @@
-FROM minimal_base
+FROM prototypebaseprojectmeta_base
 
 ADD build /build
 ENV NPS_VERSION=1.9.32.3\

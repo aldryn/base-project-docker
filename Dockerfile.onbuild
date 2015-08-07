@@ -1,4 +1,4 @@
-FROM minimal_baseproject
+FROM prototypebaseprojectmeta_baseproject
 ONBUILD ADD . /app
 ONBUILD RUN if [ -f requirements.in ] ; then pip-compile requirements.in; fi
 ONBUILD RUN if [ -f requirements.txt ] ; then pip install --trusted-host mypypi.local.aldryn.net --find-links=https://mypypi.local.aldryn.net -r requirements.txt; fi
