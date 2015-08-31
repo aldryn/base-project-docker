@@ -1,5 +1,8 @@
 FROM aldryn/base:3.0
 
+# START
+# duplicate of Dockerfile here, until we figure out some sort of chained
+# building and dynamic FROM for the build and onbuild versions.
 ADD build /build
 ENV NPS_VERSION=1.9.32.3\
     NGINX_VERSION=1.6.3\
@@ -20,3 +23,11 @@ ENV PATH=/app/node_modules/.bin:$PATH\
     DATA_ROOT=/data
 EXPOSE 80
 CMD start web
+# END
+
+ONBUILD ADD . /app
+ONBUILD RUN if [[ -f requirements.in ]] ; then pip-compile --verbose requirements.in; fi
+ONBUILD RUN if [[ -f requirements.txt ]] ; then pip install --no-cache-dir  --trusted-host mypypi.local.aldryn.net --find-links=https://mypypi.local.aldryn.net -r requirements.txt; fi
+ONBUILD RUN if [[ -f package.json ]] ; then npm install --verbose; fi
+ONBUILD RUN if [[ -f bower.json && -f .bowerrc ]] ; then bower install --verbose; fi
+ONBUILD RUN DJANGO_MODE=build python manage.py collectstatic --noinput --link
