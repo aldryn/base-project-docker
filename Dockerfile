@@ -31,7 +31,7 @@ CMD start web
 #       and execute it if it exists.
 ONBUILD ADD . /app
 ONBUILD RUN if [[ -f requirements.in ]] ; then pip-compile --verbose requirements.in; fi
-ONBUILD RUN if [[ -f requirements.txt ]] ; then pip install --no-cache-dir  --trusted-host mypypi.local.aldryn.net --find-links=https://mypypi.local.aldryn.net -r requirements.txt; fi
+ONBUILD RUN if [[ -f requirements.txt ]] ; then pip install --no-cache-dir -r requirements.txt; fi
 ONBUILD RUN if [[ -f package.json ]] ; then npm install --verbose; fi
 ONBUILD RUN if [[ -f bower.json && -f .bowerrc ]] ; then bower install --verbose; fi
 ONBUILD RUN DJANGO_MODE=build python manage.py collectstatic --noinput --link
