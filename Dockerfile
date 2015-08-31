@@ -25,6 +25,10 @@ EXPOSE 80
 CMD start web
 # END
 
+# TODO: be smarter here to prevent re-building on every little source change
+#       possible workaround to not being able to add a specific file only if it
+#       exists: add a directory somewhere else in the filesystem and then move
+#       and execute it if it exists.
 ONBUILD ADD . /app
 ONBUILD RUN if [[ -f requirements.in ]] ; then pip-compile --verbose requirements.in; fi
 ONBUILD RUN if [[ -f requirements.txt ]] ; then pip install --no-cache-dir  --trusted-host mypypi.local.aldryn.net --find-links=https://mypypi.local.aldryn.net -r requirements.txt; fi
