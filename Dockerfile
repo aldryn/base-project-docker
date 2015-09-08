@@ -29,7 +29,7 @@ CMD start web
 #       possible workaround to not being able to add a specific file only if it
 #       exists: add a directory somewhere else in the filesystem and then move
 #       and execute it if it exists.
-ONBUILD ADD . /app
+ONBUILD COPY . /app
 ONBUILD RUN if [ -f requirements.in ] ; then pip-compile --verbose requirements.in; fi
 ONBUILD RUN if [ -f requirements.txt ] ; then pip install --no-cache-dir -r requirements.txt; fi
 ONBUILD RUN if [ -f package.json ] ; then npm install --verbose; fi
