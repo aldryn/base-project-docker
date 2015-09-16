@@ -12,8 +12,7 @@ RUN mkdir -p /app && mkdir -p /data
 WORKDIR /app
 VOLUME /data
 
-ENV PATH=/app/node_modules/.bin:$PATH\
-    PIP_PRE=1\
+ENV PIP_PRE=1\
     DATA_ROOT=/data
 EXPOSE 80
 CMD start web
