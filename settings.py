@@ -296,7 +296,6 @@ EXTRA_INSTALLED_APPS = [
     'reversion',
     'parler',
     'hvad',
-    'robots',
     # TODO: remove all plugins from here. they should be addons
     'djangocms_text_ckeditor',
     # 'cms.plugins.picture',  # now using django-filer
@@ -305,7 +304,6 @@ EXTRA_INSTALLED_APPS = [
     # 'cms.plugins.file',  # now using django-filer
     'djangocms_snippet',  # 'cms.plugins.snippet',
     'djangocms_googlemap',  # 'cms.plugins.googlemap',
-    'django.contrib.sitemaps',
     'captcha',
     'treebeard',
     'mptt',
