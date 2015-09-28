@@ -1,1 +1,1 @@
-import os, sys; basepath = '/app/addons-dev'; [sys.path.insert(0, i) for i in reversed([os.path.join(basepath, pkg) for pkg in next(os.walk(basepath))[1]]) if i not in sys.path]
+import os, sys; basepath = '/app/addons-dev'; [sys.path.insert(0, i) for i in reversed([os.path.join(basepath, pkg) for pkg in next(os.walk(basepath))[1]] if os.path.exists(basepath) else []) if i not in sys.path]
