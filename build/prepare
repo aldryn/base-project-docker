@@ -3,4 +3,5 @@
 /build/node.sh
 /build/gulp.sh
 /build/bower.sh
+cp /build/addons-dev.pth /virtualenv/lib/python2.7/site-packages/aldryn-addons.pth
 
