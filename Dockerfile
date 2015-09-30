@@ -6,6 +6,9 @@ ENV NPS_VERSION=1.9.32.3\
     NGINX_PROCFILE_PATH=/etc/nginx/nginx.procfile\
     NODE_VERSION=0.10.40\
     NPM_VERSION=2.13.3
+
+RUN mkdir /wheels
+
 RUN /build/prepare
 
 RUN mkdir -p /app && mkdir -p /data
