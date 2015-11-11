@@ -3,6 +3,5 @@
 /build/node.sh
 /build/gulp.sh
 /build/bower.sh
-/build/wheels.sh
 cp /build/addons-dev.pth /virtualenv/lib/python2.7/site-packages/aldryn-addons.pth
-pipsi uninstall --yes pip-tools && pipsi install -e 'git+https://github.com/aldryncore/pip-tools.git@37a1052a725b40f9eeed7d38206c5393e0e1061d#egg=pip-tools'
+pipsi uninstall --yes pip-tools && pipsi install https://github.com/aldryncore/pip-tools/archive/1.1.6.1.tar.gz#egg=pip-tools==1.1.6.1
