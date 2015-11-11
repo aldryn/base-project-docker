@@ -1,9 +1,0 @@
-lxml==3.5.0b1
-Pillow==2.9.0
-psycopg2==2.6.1
-BeautifulSoup==3.2.1
-beautifulsoup4==4.4.0
-cryptography==1.0.2
-Django==1.6.11
-Django==1.7.10
-Django==1.8.4
