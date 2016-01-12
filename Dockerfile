@@ -1,4 +1,4 @@
-FROM aldryn/base:3.0
+FROM aldryn/base:3.1
 ADD build /build
 ENV NPS_VERSION=1.9.32.3\
     NGINX_VERSION=1.6.3\
