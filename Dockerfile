@@ -8,6 +8,9 @@ ENV NPS_VERSION=1.9.32.3\
     NPM_VERSION=2.13.3
 RUN /build/prepare
 
+# Exclude npm cache from the image
+VOLUME /root/.npm
+
 RUN mkdir -p /app && mkdir -p /data
 WORKDIR /app
 VOLUME /data
