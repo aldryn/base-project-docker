@@ -1,9 +1,0 @@
-#!/bin/bash
-/build/ngx_pagespeed.sh
-/build/node.sh
-/build/gulp.sh
-/build/bower.sh
-cp /build/addons-dev.pth /virtualenv/lib/python2.7/site-packages/aldryn-addons.pth
-pipsi uninstall --yes pip-tools && pipsi install https://github.com/aldryncore/pip-tools/archive/1.1.6.2.tar.gz#egg=pip-tools==1.1.6.2
-cp /build/fix_certifi_hack.py /virtualenv/lib/python2.7/site-packages/fix_certifi_hack.py
-cp /build/fix_certifi_hack.pth /virtualenv/lib/python2.7/site-packages/fix_certifi_hack.pth
