@@ -1,7 +1,7 @@
 FROM aldryn/base:py3-4.0
 ADD stack /stack/base-project
-ENV NPS_VERSION=1.9.32.3\
-    NGINX_VERSION=1.6.3\
+ENV NPS_VERSION=1.9.32.10\
+    NGINX_VERSION=1.8.1\
     NGINX_CONF_PATH=/etc/nginx/nginx.conf\
     NGINX_PROCFILE_PATH=/etc/nginx/nginx.procfile\
     NODE_VERSION=0.12.7\
