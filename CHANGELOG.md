@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.12 (2016-05-13)
+
+* bump to aldryn/base:3.12
+
+
 ## 3.11 (2016-05-13)
 
 * bump to aldryn/base:3.11
