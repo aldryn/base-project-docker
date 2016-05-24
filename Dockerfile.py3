@@ -1,11 +1,11 @@
 FROM aldryn/base:py3-3.12
 ADD stack /stack/base-project
-ENV NPS_VERSION=1.9.32.10\
-    NGINX_VERSION=1.8.1\
+ENV NPS_VERSION=1.11.33.2\
+    NGINX_VERSION=1.9.15\
     NGINX_CONF_PATH=/etc/nginx/nginx.conf\
     NGINX_PROCFILE_PATH=/etc/nginx/nginx.procfile\
-    NODE_VERSION=0.12.7\
-    NPM_VERSION=2.13.3
+    NODE_VERSION=0.12.14\
+    NPM_VERSION=2.15.5
 RUN /stack/base-project/install.sh
 
 RUN mkdir -p /app && mkdir -p /data
