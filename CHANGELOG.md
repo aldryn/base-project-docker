@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.13.1 (2016-06-01)
+
+* bump to aldryn/base:3.13
+
+
+## 3.13 (2016-05-24)
+
+* upgrade nginx, pagespeed, npm and node
+
+
 ## 3.12 (2016-05-13)
 
 * bump to aldryn/base:3.12
