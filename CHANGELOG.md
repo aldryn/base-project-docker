@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.15 (2016-07-04)
+
+* bump to aldryn/base:3.15 (adds geodjango related packages)
+
 ## 3.14 (2016-06-23)
 
 * bump to aldryn/base:3.14
