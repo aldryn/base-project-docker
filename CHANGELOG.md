@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.17 (2016-08-24)
+
+* bump to aldryn/base:3.17 (adds pip-reqs support)
+
+
 ## 3.15 (2016-07-04)
 
 * bump to aldryn/base:3.15 (adds geodjango related packages)
