@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.18 (2016-09-14)
+
+* bump to aldryn/base:3.18 (upgrade pip-reqs)
+
+
 ## 3.17 (2016-08-24)
 
 * bump to aldryn/base:3.17 (adds pip-reqs support)
