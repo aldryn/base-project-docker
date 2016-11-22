@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 3.20 (2016-11-22)
+
+* bump to aldryn/base:3.20
+
+
 ## 3.18 (2016-09-14)
 
 * bump to aldryn/base:3.18 (upgrade pip-reqs)
