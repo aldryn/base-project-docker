@@ -1,8 +1,14 @@
 # Changelog
 
+## 3.22 (2017-02-10)
+
+* bump to aldryn/base:3.22
+
+
 ## 3.21 (2016-11-29)
 
 * bump to aldryn/base:3.21
+
 
 ## 3.20 (2016-11-22)
 
