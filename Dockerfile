@@ -8,6 +8,9 @@ ENV NPS_VERSION=1.11.33.2 \
     NPM_VERSION=2.15.5
 RUN /stack/base-project/install.sh
 
+# Exclude npm cache from the image
+VOLUME /root/.npm
+
 RUN mkdir -p /app && mkdir -p /data
 WORKDIR /app
 VOLUME /data
