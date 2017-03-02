@@ -4,8 +4,9 @@ ENV NPS_VERSION=1.11.33.2 \
     NGINX_VERSION=1.9.15 \
     NGINX_CONF_PATH=/etc/nginx/nginx.conf \
     NGINX_PROCFILE_PATH=/etc/nginx/nginx.procfile \
-    NODE_VERSION=0.12.14 \
-    NPM_VERSION=2.15.5
+    NVM_DIR=/ \
+    NVM_VERSION=0.33.1
+
 RUN /stack/base-project/install.sh
 
 RUN mkdir -p /app && mkdir -p /data
