@@ -9,9 +9,7 @@ SCRIPT=$(readlink -f "$0")
 BASEDIR=$(dirname "$SCRIPT")
 
 ${BASEDIR}/ngx_pagespeed.sh
-${BASEDIR}/node.sh
-${BASEDIR}/gulp.sh
-${BASEDIR}/bower.sh
+${BASEDIR}/nvm.sh
 cp ${BASEDIR}/add_addons_dev_to_syspath.py ${PYTHON_SITE_PACKAGES_ROOT}/add_addons_dev_to_syspath.py
 cp ${BASEDIR}/add_addons_dev_to_syspath.pth ${PYTHON_SITE_PACKAGES_ROOT}/add_addons_dev_to_syspath.pth
 # TODO: check if this hack is needed in python3
