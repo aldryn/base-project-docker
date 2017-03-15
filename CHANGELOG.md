@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 3.23 (2017-03-15)
+
+* remove node and add nvm (node version manager) instead to uncouple the node version from base projects
+* bump to aldryn/base:3.23
+
 ## 3.22 (2017-02-10)
 
 * bump to aldryn/base:3.22
