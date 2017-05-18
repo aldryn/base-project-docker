@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.24 (2017-05-18)
+
+* bump to aldryn/base:3.24 (python 3.6, new pip-tools, new pip)
+
 
 ## 3.23 (2017-03-15)
 

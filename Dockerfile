@@ -1,4 +1,4 @@
-FROM aldryn/base:3.23
+FROM aldryn/base:3.24
 ADD stack /stack/base-project
 ENV NPS_VERSION=1.11.33.2 \
     NGINX_VERSION=1.9.15 \
