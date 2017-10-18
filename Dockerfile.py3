@@ -1,11 +1,11 @@
-FROM aldryn/base:py3-3.24
+FROM aldryn/base:py3-3.25
 ADD stack /stack/base-project
-ENV NPS_VERSION=1.11.33.2 \
-    NGINX_VERSION=1.9.15 \
+ENV NPS_VERSION=1.12.34.3 \
+    NGINX_VERSION=1.12.2 \
     NGINX_CONF_PATH=/etc/nginx/nginx.conf \
     NGINX_PROCFILE_PATH=/etc/nginx/nginx.procfile \
     NVM_DIR=/opt/nvm \
-    NVM_VERSION=0.33.1
+    NVM_VERSION=0.33.5
 
 RUN /stack/base-project/install.sh
 
