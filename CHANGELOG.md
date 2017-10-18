@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.25 (2017-10-18)
+
+* bump to aldryn/base:3.25 (python 3.6.3 / 2.7.14)
+* latest nginx and nvm
+
+
 ## 3.24 (2017-05-18)
 
 * bump to aldryn/base:3.24 (python 3.6, new pip-tools, new pip)
@@ -9,6 +15,7 @@
 
 * remove node and add nvm (node version manager) instead to uncouple the node version from base projects
 * bump to aldryn/base:3.23
+
 
 ## 3.22 (2017-02-10)
 
