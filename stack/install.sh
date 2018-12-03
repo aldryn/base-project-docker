@@ -12,6 +12,3 @@ ${BASEDIR}/ngx_pagespeed.sh
 ${BASEDIR}/nvm.sh
 cp ${BASEDIR}/add_addons_dev_to_syspath.py ${PYTHON_SITE_PACKAGES_ROOT}/add_addons_dev_to_syspath.py
 cp ${BASEDIR}/add_addons_dev_to_syspath.pth ${PYTHON_SITE_PACKAGES_ROOT}/add_addons_dev_to_syspath.pth
-# TODO: check if this hack is needed in python3
-cp ${BASEDIR}/fix_certifi_hack.py ${PYTHON_SITE_PACKAGES_ROOT}/fix_certifi_hack.py
-cp ${BASEDIR}/fix_certifi_hack.pth ${PYTHON_SITE_PACKAGES_ROOT}/fix_certifi_hack.pth
